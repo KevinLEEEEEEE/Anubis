@@ -1,0 +1,19 @@
+{
+  "name": "newproject",
+  "version": "2.0.0",
+  "description": "new branch",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint assets/Script/*.js",
+    "lint-html": "eslint assets/Script/*.js -f html -o ./reports/lint-results.html",
+    "lint-fix": "eslint --fix assets/Script/*.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^4.19.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0"
+  }
+}
