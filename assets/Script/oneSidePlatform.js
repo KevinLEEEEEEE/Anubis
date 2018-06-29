@@ -32,7 +32,7 @@ export default class oneSidePlatform extends cc.Component {
             relativePoint: this.relativePoint,
         };
 
-        const length = points.length;
+        const length = points.length  ;
 
         for (let i = 0; i < length; i += 1) {
             platformBody.getLinearVelocityFromWorldPoint(points[i], pointVelPlatform);

@@ -1,19 +1,22 @@
 {
-  "name": "newproject",
-  "version": "2.0.0",
+  "name": "acarbose",
+  "version": "1.0.0",
   "description": "new branch",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --compilers js:babel-register --recursive",
     "lint": "eslint assets/Script/*.js",
-    "lint-html": "eslint assets/Script/*.js -f html -o ./reports/lint-results.html",
     "lint-fix": "eslint --fix assets/Script/*.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^4.19.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.9.0"
+    "eslint-plugin-import": "^2.11.0",
+    "mocha": "^5.2.0"
   }
 }

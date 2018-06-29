@@ -2,13 +2,15 @@
   "extends": "airbnb-base",
   "rules": {
     "no-console": "off",
-    "indent": [2, 4],
+    "indent": [2, 2],
     "no-bitwise": 0,
     "no-param-reassign": 0,
     "no-underscore-dangle": 0,
     "linebreak-style": ["error", "windows"]
   },
   "globals": {
-    "cc": true
+    "cc": true,
+    "describe": true,
+    "it": true
   }
 }
