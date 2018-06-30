@@ -1,3 +1,4 @@
+import ls from './localStorage/localStorage';
 
 const {ccclass, property} = cc._decorator;
 
@@ -12,5 +13,7 @@ export default class physicalActive extends cc.Component {
             // cc.PhysicsManager.DrawBits.e_centerOfMassBit |
             cc.PhysicsManager.DrawBits.e_jointBit |
             cc.PhysicsManager.DrawBits.e_shapeBit; // 激活物理组件与debug框
+            ls.sets();
+            // localStorage.sets();
     }
 }
