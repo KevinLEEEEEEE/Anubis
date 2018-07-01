@@ -31,8 +31,8 @@ export default class cameraControl extends cc.Component {
         const node = this.node;
         const target = this.target;
 
-        const nodeX = node.x;
-        const nodeY = node.y;
+        // const nodeX = node.x;
+        // const nodeY = node.y;
         const targetX = target.x;
         const targetY = target.y;
 

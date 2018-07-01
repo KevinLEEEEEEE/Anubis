@@ -3079,7 +3079,7 @@
     "_originalHeight": 0
   },
   {
-    "__type__": "f57a37ILuZHhY+1slZZ0iz5",
+    "__type__": "ad1b4IUgWpJqI/g3ieQYQXw",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -3089,8 +3089,13 @@
     "target": {
       "__id__": 4
     },
-    "sizeNode": {
-      "__id__": 42
-    }
+    "camera": {
+      "__id__": 3
+    },
+    "followX": 300,
+    "followY": 120,
+    "minFollowDist": 50,
+    "followRatio": 0.06,
+    "minRatio": 0.02
   }
 ]
