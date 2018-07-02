@@ -7,11 +7,24 @@ cc.Class({
 
   // LIFE-CYCLE CALLBACKS:
 
-  // onLoad () {},
+  onLoad() {
+    this.node.on(cc.Node.EventType.MOUSE_DOWN, this.mousedown, this);
 
-  init(type, info) {
-    this.type = type;
-    this.info = info;
+    const inventory = cc.find('Canvas/inventory');
+    this.inventoryMethods = inventory.getComponent('inventoryManager');
   },
-  // update (dt) {},
+
+  init(type, match) {
+    this.type = type;
+    this.match = match;
+  },
+
+  mousedown() {
+    this.inventoryMethods.check({
+      node: this,
+      type: this.type,
+      match: this.match,
+    });
+  },
+
 });

@@ -28,7 +28,8 @@ cc.Class({
 
     this.btnControl = false;
 
-    this.node.on(cc.Node.EventType.MOUSE_DOWN, this.selectItem, this);
+    this.node.on(cc.Node.EventType.MOUSE_ENTER, this.mouseEnter, this);
+    this.node.on(cc.Node.EventType.MOUSE_LEAVE, this.mouseLeave, this);
   },
 
   add(item) {
@@ -52,6 +53,26 @@ cc.Class({
     }
   },
 
+  detect(notch) {
+    this.clear();
+    this.btnControl = true; // the btn has the supreme authority
+    this.show();
+
+    this.notch = notch;
+  },
+
+  mouseEnter() {
+    if (!this.btnControl) {
+      this.clear();
+    }
+  },
+
+  mouseLeave() {
+    if (!this.btnControl) {
+      this.delyHide(this.duration);
+    }
+  },
+
   show(duration) {
     this.visibility = true;
 
@@ -59,10 +80,7 @@ cc.Class({
 
     if (typeof duration === 'number' && !this.btnControl) {
       this.clear();
-
-      this.onSchedule = setTimeout(() => {
-        this.hide();
-      }, duration);
+      this.delyHide(duration);
     }
   },
 
@@ -76,6 +94,12 @@ cc.Class({
     if (this.onSchedule !== null) {
       clearTimeout(this.onSchedule); // reset the clock when the object is obtained
     }
+  },
+
+  delyHide(duration) {
+    this.onSchedule = setTimeout(() => {
+      this.hide();
+    }, duration);
   },
 
   addNode(type, info) {
@@ -96,10 +120,6 @@ cc.Class({
 
   removeNode() {
 
-  },
-
-  selectItem(e) {
-    console.log(e.target.info);
   },
 
   readObjectsCache() {

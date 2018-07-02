@@ -151,8 +151,9 @@
       "__id__": 1
     },
     "_enabled": true,
-    "type": "none",
-    "info": "none"
+    "type": 1,
+    "decorationMatch": "none",
+    "keyMatch": "none"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -160,7 +161,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "41af1d23-cec0-4f93-ac5b-69e70c3d14ed"
     },
     "fileId": "ade4nn/mRExJw1u603rcZW",
     "sync": false

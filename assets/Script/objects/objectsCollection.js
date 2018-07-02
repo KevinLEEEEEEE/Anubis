@@ -8,24 +8,13 @@ cc.Class({
       default: objectList.key,
       type: objectList,
     },
-    decorationMatch: {
-      default: 'none',
-      visible() {
-        return this.type === objectList.decoration;
-      },
-    },
-    keyMatch: {
-      default: 'none',
-      visible() {
-        return this.type === objectList.key;
-      },
-    },
+    match: 'none',
   },
 
   onLoad() {
     const result = this.checkVisibility({
       type: this.type,
-      info: this.info,
+      match: this.match,
     });
 
     if (!result) { // if the object has been collected, then remove it
@@ -56,17 +45,10 @@ cc.Class({
     const inventory = cc.find('Canvas/inventory');
     const inventoryMethods = inventory.getComponent('inventoryManager');
 
-    switch (this.type) {
-    case objectList.decoration:
-      break;
-    case objectList.key:
-      inventoryMethods.add({
-        type: this.type,
-        info: this.keyMatch,
-      }); // add to the inventory
-      break;
-    default:
-    }
+    inventoryMethods.add({
+      type: this.type,
+      match: this.match,
+    }); // add to the inventory
   },
 
   remove() {
