@@ -20,6 +20,8 @@ cc.Class({
   },
 
   mousedown() {
+    // highlight
+    // no bag btn - dock like inventory
     this.inventoryMethods.check({
       node: this,
       type: this.type,
