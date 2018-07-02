@@ -1,10 +1,25 @@
+import objectList from '../config/objectList';
 
 cc.Class({
   extends: cc.Component,
 
   properties: {
-    type: 'none',
-    info: 'none',
+    type: {
+      default: objectList.key,
+      type: objectList,
+    },
+    decorationMatch: {
+      default: 'none',
+      visible() {
+        return this.type === objectList.decoration;
+      },
+    },
+    keyMatch: {
+      default: 'none',
+      visible() {
+        return this.type === objectList.key;
+      },
+    },
   },
 
   onLoad() {
@@ -30,17 +45,28 @@ cc.Class({
     }
     contact.disabled = true;
 
-    const inventory = cc.find('Canvas/inventory');
-    const inventoryMethods = inventory.getComponent('inventoryManager');
-
-    inventoryMethods.add({
-      type: this.type,
-      info: this.info,
-    }); // add to the inventory
+    this.inventoryAdd();
 
     // play animation
 
     this.remove();
+  },
+
+  inventoryAdd() {
+    const inventory = cc.find('Canvas/inventory');
+    const inventoryMethods = inventory.getComponent('inventoryManager');
+
+    switch (this.type) {
+    case objectList.decoration:
+      break;
+    case objectList.key:
+      inventoryMethods.add({
+        type: this.type,
+        info: this.keyMatch,
+      }); // add to the inventory
+      break;
+    default:
+    }
   },
 
   remove() {

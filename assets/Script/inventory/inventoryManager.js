@@ -1,10 +1,13 @@
 import storageManager from '../localStorage/storageManager';
+import objectList from '../config/objectList';
 
 cc.Class({
   extends: cc.Component,
 
   properties: {
     key: cc.Prefab,
+    container: cc.Node,
+    duration: 0,
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -20,44 +23,90 @@ cc.Class({
     this.hideY = this.showY - this.node.height;
 
     this.x = this.node.position.x;
+
+    this.onSchedule = null;
+
+    this.btnControl = false;
+
+    this.node.on(cc.Node.EventType.MOUSE_DOWN, this.selectItem, this);
   },
 
   add(item) {
-    console.log(item);
+    const { type, info } = item;
+
+    this.addNode(type, info);
+    this.show(this.duration);
     // update cache
     // update and show inventory
   },
 
   toggle() {
-    this.visibility = !this.visibility;
-    if (this.visibility) {
+    this.clear();
+
+    if (!this.visibility) {
+      this.btnControl = true; // the btn has the supreme authority
       this.show();
     } else {
+      this.btnControl = false;
       this.hide();
     }
   },
 
-  show() {
+  show(duration) {
+    this.visibility = true;
+
     this.node.position = cc.v2(this.x, this.showY);
+
+    if (typeof duration === 'number' && !this.btnControl) {
+      this.clear();
+
+      this.onSchedule = setTimeout(() => {
+        this.hide();
+      }, duration);
+    }
   },
 
   hide() {
+    this.visibility = false;
+
     this.node.position = cc.v2(this.x, this.hideY);
   },
 
-  addNode() {
+  clear() {
+    if (this.onSchedule !== null) {
+      clearTimeout(this.onSchedule); // reset the clock when the object is obtained
+    }
+  },
 
+  addNode(type, info) {
+    let item = null;
+    switch (type) {
+    case objectList.decoration:
+      break;
+    case objectList.key:
+      item = cc.instantiate(this.key);
+      break;
+    default:
+    }
+
+    item.getComponent('objectControl').init(type, info);
+
+    item.parent = this.container;
   },
 
   removeNode() {
 
   },
 
-  readObjectsCache() {
-
+  selectItem(e) {
+    console.log(e.target.info);
   },
 
-  writeObjectsCache() {
+  readObjectsCache() {
+    return storageManager.readObjectsCache();
+  },
 
+  writeObjectsCache(list) {
+    storageManager.writeObjectsCache(list);
   },
 });
