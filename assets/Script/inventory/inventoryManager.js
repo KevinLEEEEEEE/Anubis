@@ -51,6 +51,19 @@ cc.Class({
     });
   },
 
+  start() {
+    this.init();
+  },
+
+  init() {
+    this.objectList = this.readObjectsCache();
+
+    this.objectList.forEach((object) => {
+      const { type, match } = object;
+      this.addNode(type, match);
+    });
+  },
+
   // --------------------------------------------------------------------------------------------
 
   toggle() { // the btn controls toggle function
@@ -144,7 +157,7 @@ cc.Class({
   // --------------------------------------------------------------------------------------------
 
   add(item) {
-    const { type, match } = item;
+    const { type = 'default', match = 'none' } = item; // lack of default option
 
     this.addNode(type, match);
 
@@ -167,6 +180,11 @@ cc.Class({
     item.getComponent('inventoryObjects').init(type, match);
 
     item.parent = this.container;
+
+    this.writeObjectsCache({
+      type,
+      match,
+    });
   },
 
   removeNode(node) {
@@ -176,11 +194,11 @@ cc.Class({
   // --------------------------------------------------------------------------------------------
 
   readObjectsCache() {
-    return storageManager.readObjectsCache();
+    return storageManager.readObjectsCache() || [];
   },
 
-  writeObjectsCache(list) {
-    storageManager.writeObjectsCache(list);
+  writeObjectsCache(item) {
+    storageManager.writeObjectsCache(item);
   },
 
   // --------------------------------------------------------------------------------------------

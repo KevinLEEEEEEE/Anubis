@@ -1,3 +1,4 @@
+import storageManager from '../localStorage/storageManager';
 
 cc.Class({
   extends: cc.Component,
@@ -12,6 +13,12 @@ cc.Class({
 
     const inventory = cc.find('Canvas/inventory');
     this.inventoryMethods = inventory.getComponent('inventoryManager');
+
+    this.init();
+  },
+
+  init() {
+
   },
 
   notchDetect(e) {

@@ -1,28 +1,45 @@
 import localStorage from './localStorage';
+import objectList from '../config/objectList';
 
 const _storageManager = {
   read(key) {
     const value = localStorage.read(key);
-    if (value && value !== false) {
-      return value;
-    }
-    return false; // return default setting
+    console.log(value);
+    return value;
+    // if (value !== false) {
+    //   console.log(value);
+    //   return value;
+    // }
+    // return false; // return default setting
   },
   write(key, value) {
     localStorage.write(key, value);
   },
-  init() {
+  init(key, value) {
 
   },
 };
 
 const storageManeger = {
-  readObjectsCache() {
+  objectCache: [],
 
+  readObjectsCache() {
+    const objectCache = _storageManager.read('inventory');
+
+    // if false, then init localStorage
+
+    return objectCache;
+    // return [
+    //   {
+    //     type: objectList.key,
+    //     match: 'L01D01',
+    //   },
+    // ];
   },
 
-  writeObjectsCache() {
-
+  writeObjectsCache(item) {
+    this.objectCache.push(item);
+    this.save();
   },
 
   readLevelsCache() {
@@ -33,9 +50,16 @@ const storageManeger = {
 
   },
 
+  readInfoCache() {
+
+  },
+
+  writeInfoCache() {
+
+  },
+
   save() {
-    this.writeObjectsCache();
-    this.writeLevelCache();
+    _storageManager.write('inventory', this.objectCache);
   },
 };
 
