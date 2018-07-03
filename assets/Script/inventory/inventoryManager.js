@@ -109,7 +109,7 @@ cc.Class({
 
   delyHide(duration) {
     this.onSchedule = setTimeout(() => {
-      this.hide();
+      this.state = state.off;
     }, duration);
   },
 
