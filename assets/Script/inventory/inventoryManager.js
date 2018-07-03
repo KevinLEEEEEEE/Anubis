@@ -1,6 +1,13 @@
 import storageManager from '../localStorage/storageManager';
 import objectList from '../config/objectList';
 
+const state = cc.Enum({
+  off: 0,
+  foreverOn: 1,
+  delyOn: 2,
+  delyOnPause: 3,
+});
+
 cc.Class({
   extends: cc.Component,
 
@@ -14,8 +21,6 @@ cc.Class({
 
   onLoad() {
     // read from chche
-    this.visibility = false;
-
     const visibleSize = cc.view.getVisibleSize(); // Returns the visible area size of the view port.
 
     this.showY = -visibleSize.height / 2;
@@ -24,69 +29,60 @@ cc.Class({
 
     this.x = this.node.position.x;
 
-    this.onSchedule = null;
-
-    this.btnControl = false;
-
     this.node.on(cc.Node.EventType.MOUSE_ENTER, this.mouseEnter, this);
     this.node.on(cc.Node.EventType.MOUSE_LEAVE, this.mouseLeave, this);
+
+    this.onSchedule = null;
+
+    const that = this;
+
+    Reflect.defineProperty(this, 'state', {
+      configurable: false,
+      enumerable: true,
+      get() {
+        return this.cache || state.off;
+      },
+      set(cState) {
+        this.cache = cState;
+        that.refresh();
+      },
+    });
   },
 
-  add(item) {
-    const { type, info } = item;
+  // --------------------------------------------------------------------------------------------
 
-    this.addNode(type, info);
-    this.show(this.duration);
-    // update cache
-    // update and show inventory
-  },
-
-  toggle() {
-    this.clear();
-
-    if (!this.visibility) {
-      this.btnControl = true; // the btn has the supreme authority
-      this.show();
+  toggle() { // the btn controls toggle function
+    if (this.state === state.off) {
+      this.state = state.foreverOn;
     } else {
-      this.btnControl = false;
-      this.hide();
+      this.state = state.off;
     }
   },
 
-  detect(notch) {
-    this.clear();
-    this.btnControl = true; // the btn has the supreme authority
-    this.show();
-
+  detect(notch) { // whe the plsyer nock the key hole
+    this.state = state.foreverOn;
     this.notch = notch;
   },
 
   mouseEnter() {
-    if (!this.btnControl) {
-      this.clear();
+    if (this.state === state.delyOn) {
+      this.state = state.delyOnPause;
     }
   },
 
   mouseLeave() {
-    if (!this.btnControl) {
-      this.delyHide(this.duration);
+    if (this.state === state.delyOnPause) {
+      this.state = state.delyOn;
     }
   },
 
-  show(duration) {
-    this.visibility = true;
+  // --------------------------------------------------------------------------------------------
 
+  show() {
     this.node.position = cc.v2(this.x, this.showY);
-
-    if (typeof duration === 'number' && !this.btnControl) {
-      this.clear();
-      this.delyHide(duration);
-    }
   },
 
   hide() {
-    this.visibility = false;
-
     this.node.position = cc.v2(this.x, this.hideY);
   },
 
@@ -100,6 +96,59 @@ cc.Class({
     this.onSchedule = setTimeout(() => {
       this.hide();
     }, duration);
+  },
+
+  // --------------------------------------------------------------------------------------------
+
+  refresh() { // the main refresh function is called when the state changes
+    switch (this.state) {
+    case state.off:
+      this.off();
+      break;
+    case state.foreverOn:
+      this.foreverOn();
+      break;
+    case state.delyOn:
+      this.delyOn();
+      break;
+    case state.delyOnPause:
+      this.delyOnPause();
+      break;
+    default:
+      this.off();
+    }
+  },
+
+  off() {
+    this.clear();
+    this.hide();
+  },
+
+  foreverOn() {
+    this.clear();
+    this.show();
+  },
+
+  delyOn() {
+    this.clear();
+    this.show();
+    this.delyHide(this.duration);
+  },
+
+  delyOnPause() {
+    this.clear();
+  },
+
+  // --------------------------------------------------------------------------------------------
+
+  add(item) {
+    const { type, info } = item;
+
+    this.addNode(type, info);
+
+    this.state = state.delyOn;
+    // update cache
+    // update and show inventory
   },
 
   addNode(type, info) {
@@ -121,6 +170,8 @@ cc.Class({
   removeNode() {
 
   },
+
+  // --------------------------------------------------------------------------------------------
 
   readObjectsCache() {
     return storageManager.readObjectsCache();
