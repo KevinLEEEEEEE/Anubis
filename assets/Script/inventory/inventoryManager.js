@@ -34,6 +34,8 @@ cc.Class({
 
     this.onSchedule = null;
 
+    this.checkInfo = null;
+
     const that = this;
 
     Reflect.defineProperty(this, 'state', {
@@ -142,16 +144,16 @@ cc.Class({
   // --------------------------------------------------------------------------------------------
 
   add(item) {
-    const { type, info } = item;
+    const { type, match } = item;
 
-    this.addNode(type, info);
+    this.addNode(type, match);
 
     this.state = state.delyOn;
     // update cache
     // update and show inventory
   },
 
-  addNode(type, info) {
+  addNode(type, match) {
     let item = null;
     switch (type) {
     case objectList.decoration:
@@ -162,13 +164,13 @@ cc.Class({
     default:
     }
 
-    item.getComponent('objectControl').init(type, info);
+    item.getComponent('inventoryObjects').init(type, match);
 
     item.parent = this.container;
   },
 
-  removeNode() {
-
+  removeNode(node) {
+    node.active = false;
   },
 
   // --------------------------------------------------------------------------------------------
@@ -179,5 +181,36 @@ cc.Class({
 
   writeObjectsCache(list) {
     storageManager.writeObjectsCache(list);
+  },
+
+  // --------------------------------------------------------------------------------------------
+
+  mousedown(info) {
+    if (this.checkInfo !== null) {
+      console.log(info.match, this.checkInfo.match);
+      if (info.match === this.checkInfo.match) {
+        this.checkInfo.resolve();
+
+        this.removeNode(info.node);
+        // object disappear
+        // write into cache
+      } else {
+        this.checkInfo.reject();
+        // nothing happens
+      }
+      this.checkInfo = null;
+    }
+  },
+
+  check(message) {
+    this.state = state.foreverOn;
+
+    return new Promise((resolve, reject) => {
+      this.checkInfo = {
+        resolve,
+        reject,
+        match: message.match,
+      };
+    });
   },
 });
