@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "9c367ab8-74fb-4bd3-914d-b5f0753a6adc",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "Hanging Brick (Crazing)": {
+      "ver": "1.0.3",
+      "uuid": "6340a6bd-a8e7-43b9-9842-451b85d1fccf",
+      "rawTextureUuid": "9c367ab8-74fb-4bd3-914d-b5f0753a6adc",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 363,
+      "height": 120,
+      "rawWidth": 363,
+      "rawHeight": 120,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
