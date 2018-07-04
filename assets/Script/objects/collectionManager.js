@@ -22,8 +22,34 @@ cc.Class({
   init() {
     this.collectionList = this.pullFromCache();
 
-    console.log(this.collectionList);
+    const { children } = this.node;
+
+    children.forEach((child) => {
+      const methods = child.getComponent('collectionObject');
+      const info = methods.report();
+      if (this.collectionList.find(collection => this.isEqual(collection, info))) {
+        methods.remove();
+      }
+    });
   },
+
+  isEqual(a, b) {
+    let result = true;
+
+    if (Object.keys(a).length !== Object.keys(b).length) {
+      result = false;
+    }
+
+    Object.keys(a).forEach((key) => {
+      if (!(Reflect.has(b, key) && a[key] === b[key])) {
+        result = false;
+      }
+    });
+
+    return result;
+  },
+
+  // --------------------------------------------------------------------------------------------
 
   collectionDetect(e) {
     const message = e.getUserData();
@@ -54,6 +80,11 @@ cc.Class({
       level: this.level,
       match,
     }); // add to the inventory
+
+    this.addToLocalCache({
+      type,
+      match,
+    });
   },
 
   bloodAdd() {
@@ -62,6 +93,14 @@ cc.Class({
 
   fragmentAdd() {
 
+  },
+
+  // --------------------------------------------------------------------------------------------
+
+  addToLocalCache(item) {
+    this.collectionList.push(item);
+
+    this.pushToCache(); // save btn required
   },
 
   pullFromCache() {

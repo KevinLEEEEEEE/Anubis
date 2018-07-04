@@ -188,7 +188,6 @@ cc.Class({
 
   removeNode(info) {
     // remove the node fron inventory
-    cc.log('remove inventory node');
     // cc.log(info.node);
 
     const index = this.inventoryList.findIndex(collection => this.isEqual(info, collection));

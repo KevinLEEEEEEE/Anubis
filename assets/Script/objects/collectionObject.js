@@ -20,7 +20,7 @@ cc.Class({
   onBeginContact(contact, selfCollider, otherCollider) {
     const otherBody = otherCollider.body;
 
-    contact.disabled = true;
+    contact.disabled = true; // the collection is uncontactable
 
     if (otherBody.node.group !== 'player') {
       return;
@@ -29,7 +29,6 @@ cc.Class({
     // play animation
 
     this.collectionDetect();
-
     this.remove();
   },
 
@@ -43,6 +42,13 @@ cc.Class({
     });
 
     this.node.dispatchEvent(event);
+  },
+
+  report() {
+    return {
+      type: this.type,
+      match: this.match,
+    };
   },
 
   remove() {

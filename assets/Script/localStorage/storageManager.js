@@ -37,11 +37,11 @@ const storageManeger = {
     if (Reflect.has(this.collectionCache, level)) {
       return this.collectionCache[level];
     }
-    return {};
+    return [];
   },
 
   writeLevelCollectionCache(level, list) {
-    this.collection[level] = list;
+    this.collectionCache[level] = list;
     this.save();
   },
 

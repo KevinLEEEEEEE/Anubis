@@ -21,8 +21,9 @@ cc.Class({
   },
 
   mousedown() {
-    // highlight
-    // no bag btn - dock like inventory
+    // highlight the item
+
+    // distance detect required
     this.inventoryMethods.mousedown({
       node: this,
       type: this.type,
