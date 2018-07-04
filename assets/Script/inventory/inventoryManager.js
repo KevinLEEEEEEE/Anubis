@@ -235,7 +235,13 @@ cc.Class({
 
   mousedown(info) {
     if (this.checkInfo !== null) {
+      if (this.checkInfo.active === false) {
+        this.checkInfo.reject();
+        return;
+      }
+
       const { type, level, match } = info;
+
       if (type === this.checkInfo.require &&
         level === this.checkInfo.level &&
         match === this.checkInfo.match) {
@@ -256,11 +262,18 @@ cc.Class({
     }
   },
 
+  uncheck() {
+    if (this.checkInfo !== null) {
+      this.checkInfo.active = false;
+    }
+  },
+
   check(message) {
     this.state = state.foreverOn;
 
     return new Promise((resolve, reject) => {
       this.checkInfo = {
+        active: true,
         resolve,
         reject,
         require: message.require,

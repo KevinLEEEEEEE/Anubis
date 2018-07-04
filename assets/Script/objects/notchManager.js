@@ -5,6 +5,9 @@ cc.Class({
 
   properties: {
     level: 0,
+    distance: 200,
+    detectRate: 1,
+    player: cc.Node,
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -19,7 +22,7 @@ cc.Class({
   },
 
   init() {
-
+    this.targetPos = cc.v2(0, 0);
   },
 
   notchDetect(e) {
@@ -42,6 +45,27 @@ cc.Class({
       }, () => {
         console.log('failed to open the door');
       });
+
+    this.targetPos = target.convertToWorldSpaceAR(target.getPosition());
+
+    this.timigDetection(target);
+  },
+
+  notchUnDetect() {
+    this.inventoryMethods.uncheck();
+  },
+
+  timigDetection(target) {
+    const callBack = () => {
+      const playerPos = this.player.convertToWorldSpaceAR(this.player.getPosition());
+      const distance = cc.pDistance(playerPos, this.targetPos);
+      if (distance > this.distance) {
+        this.notchUnDetect();
+        this.unschedule(callBack);
+      }
+    }
+
+    this.schedule(callBack, this.detectRate);
   },
 
   unlockNotch(target) {
