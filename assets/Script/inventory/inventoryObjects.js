@@ -14,8 +14,9 @@ cc.Class({
     this.inventoryMethods = inventory.getComponent('inventoryManager');
   },
 
-  init(type, match) {
+  init(type, level, match) {
     this.type = type;
+    this.level = level;
     this.match = match;
   },
 
@@ -25,6 +26,7 @@ cc.Class({
     this.inventoryMethods.mousedown({
       node: this,
       type: this.type,
+      level: this.level,
       match: this.match,
     });
   },

@@ -4,6 +4,7 @@ cc.Class({
   extends: cc.Component,
 
   properties: {
+    level: 0,
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -23,9 +24,15 @@ cc.Class({
 
   notchDetect(e) {
     const { target } = e;
-    const message = e.getUserData();
+    const { require, match } = e.getUserData();
 
-    this.inventoryMethods.check(message)
+    e.stopPropagation();
+
+    this.inventoryMethods.check({
+      require,
+      level: this.level,
+      match,
+    })
       .then(() => {
         console.log('open successfully');
 
@@ -41,6 +48,14 @@ cc.Class({
     const notchMethods = target.getComponent('notchObject');
 
     notchMethods.unlock();
+  },
+
+  pullFromCache() {
+    return storageManager.readLevelNotchCache(this.level) || {};
+  },
+
+  pushToCache() {
+    storageManager.writeLevelNotchCache(this.level, this.notchList);
   },
 
   // update (dt) {},

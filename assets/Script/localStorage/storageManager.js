@@ -1,53 +1,63 @@
 import localStorage from './localStorage';
-import objectList from '../config/objectList';
 
 const _storageManager = {
   read(key) {
     const value = localStorage.read(key);
-    console.log(value);
     return value;
-    // if (value !== false) {
-    //   console.log(value);
-    //   return value;
-    // }
-    // return false; // return default setting
   },
   write(key, value) {
     localStorage.write(key, value);
   },
-  init(key, value) {
-
-  },
 };
 
 const storageManeger = {
-  objectCache: [],
+  inventoryCache: null,
+  collectionCache: null,
+  notchCache: null,
 
-  readObjectsCache() {
-    const objectCache = _storageManager.read('inventory');
+  readInventoryCache() {
+    const inventoryCache = _storageManager.read('inventory');
+
+    this.inventoryCache = inventoryCache;
 
     // if false, then init localStorage
 
-    return objectCache;
-    // return [
-    //   {
-    //     type: objectList.key,
-    //     match: 'L01D01',
-    //   },
-    // ];
+    return inventoryCache;
   },
 
-  writeObjectsCache(item) {
-    this.objectCache.push(item);
+  writeInventoryCache(list) {
+    this.inventoryCache = list;
     this.save();
   },
 
-  readLevelsCache() {
-
+  readLevelCollectionCache(level) {
+    if (this.collectionCache === null) {
+      this.collectionCache = _storageManager.read('collection') || {};
+    }
+    if (Reflect.has(this.collectionCache, level)) {
+      return this.collectionCache[level];
+    }
+    return {};
   },
 
-  writeLevelCache() {
+  writeLevelCollectionCache(level, list) {
+    this.collection[level] = list;
+    this.save();
+  },
 
+  readLevelNotchCache(level) {
+    if (this.notchCache === null) {
+      this.notchCache = _storageManager.read('notch') || {};
+    }
+    if (Reflect.has(this.notchCache, level)) {
+      return this.notchCache[level];
+    }
+    return null;
+  },
+
+  writeLevelNotchCache(level, list) {
+    this.notchCache[level] = list;
+    this.save();
   },
 
   readInfoCache() {
@@ -59,7 +69,9 @@ const storageManeger = {
   },
 
   save() {
-    _storageManager.write('inventory', this.objectCache);
+    _storageManager.write('inventory', this.inventoryCache);
+    _storageManager.write('collection', this.collectionCache);
+    _storageManager.write('notch', this.notchCache);
   },
 };
 

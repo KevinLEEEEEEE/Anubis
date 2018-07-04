@@ -49,18 +49,16 @@ cc.Class({
         that.refresh();
       },
     });
-  },
 
-  start() {
     this.init();
   },
 
   init() {
-    this.objectList = this.readObjectsCache();
+    this.inventoryList = this.pullFromCache();
 
-    this.objectList.forEach((object) => {
-      const { type, match } = object;
-      this.addNode(type, match);
+    this.inventoryList.forEach((object) => {
+      const { type, level, match } = object;
+      this.addNode(type, level, match);
     });
   },
 
@@ -157,16 +155,16 @@ cc.Class({
   // --------------------------------------------------------------------------------------------
 
   add(item) {
-    const { type = 'default', match = 'none' } = item; // lack of default option
+    const { type = 'default', level = '0', match = 'none' } = item; // lack of default option
 
-    this.addNode(type, match);
+    this.addNode(type, level, match);
 
     this.state = state.delyOn;
     // update cache
     // update and show inventory
   },
 
-  addNode(type, match) {
+  addNode(type, level, match) {
     let item = null;
     switch (type) {
     case objectList.decoration:
@@ -177,39 +175,78 @@ cc.Class({
     default:
     }
 
-    item.getComponent('inventoryObjects').init(type, match);
+    item.getComponent('inventoryObjects').init(type, level, match);
 
     item.parent = this.container;
 
-    this.writeObjectsCache({
+    this.addToLocalCache({
       type,
+      level,
       match,
     });
   },
 
-  removeNode(node) {
-    node.active = false;
+  removeNode(info) {
+    // remove the node fron inventory
+    cc.log('remove inventory node');
+    // cc.log(info.node);
+
+    const index = this.inventoryList.findIndex(collection => this.isEqual(info, collection));
+
+    this.inventoryList.splice(index, 1);
+
+    this.deleteFromLocalCache(info);
+  },
+
+  isEqual(a, b) {
+    let result = true;
+
+    if (Object.keys(a).length !== Object.keys(b).length) {
+      result = false;
+    }
+
+    Object.keys(a).forEach((key) => {
+      if (!(Reflect.has(b, key) && a[key] === b[key])) {
+        result = false;
+      }
+    });
+
+    return result;
   },
 
   // --------------------------------------------------------------------------------------------
 
-  readObjectsCache() {
-    return storageManager.readObjectsCache() || [];
+  addToLocalCache(item) {
+    this.inventoryList.push(item);
   },
 
-  writeObjectsCache(item) {
-    storageManager.writeObjectsCache(item);
+  deleteFromLocalCache(item) {
+    return Reflect.deleteProperty(this.inventoryList, item);
+  },
+
+  pullFromCache() {
+    return storageManager.readInventoryCache() || [];
+  },
+
+  pushToCache() {
+    storageManager.writeInventoryCache(this.inventoryList);
   },
 
   // --------------------------------------------------------------------------------------------
 
   mousedown(info) {
     if (this.checkInfo !== null) {
-      console.log(info.match, this.checkInfo.match);
-      if (info.match === this.checkInfo.match) {
+      const { type, level, match } = info;
+      if (type === this.checkInfo.require &&
+        level === this.checkInfo.level &&
+        match === this.checkInfo.match) {
         this.checkInfo.resolve();
 
-        this.removeNode(info.node);
+        this.removeNode({
+          type,
+          level,
+          match,
+        });
         // object disappear
         // write into cache
       } else {
@@ -227,6 +264,8 @@ cc.Class({
       this.checkInfo = {
         resolve,
         reject,
+        require: message.require,
+        level: message.level,
         match: message.match,
       };
     });

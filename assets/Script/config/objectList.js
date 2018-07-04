@@ -1,5 +1,7 @@
 
 export default cc.Enum({
-  decoration: 0,
+  default: 0,
   key: 1,
+  blood: 2,
+  fragment: 3,
 });
