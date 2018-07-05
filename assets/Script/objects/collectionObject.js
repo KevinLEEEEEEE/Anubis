@@ -1,4 +1,5 @@
 import objectList from '../config/objectList';
+import logger from '../utils/logger';
 
 cc.Class({
   extends: cc.Component,
@@ -27,6 +28,7 @@ cc.Class({
     }
 
     // play animation
+    logger.INFO(`player obtain collection: ${this.match}`);
 
     this.collectionDetect();
     this.remove();
@@ -53,5 +55,6 @@ cc.Class({
 
   remove() {
     this.node.active = false;
+    logger.INFO(`collection remove from parent: ${this.match}`);
   },
 });

@@ -1,6 +1,7 @@
 import storageManager from '../localStorage/storageManager';
 import objectList from '../config/objectList';
 import isEqual from '../utils/isEqual';
+import logger from '../utils/logger';
 
 cc.Class({
   extends: cc.Component,
@@ -22,6 +23,9 @@ cc.Class({
 
   init() {
     this.collectionList = this.pullFromCache();
+
+    logger.INFO('init collectionManager');
+    logger.DEBUG('collectionList from cache:', this.collectionList);
 
     const { children } = this.node;
 

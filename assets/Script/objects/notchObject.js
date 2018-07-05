@@ -1,4 +1,5 @@
 import objectList from '../config/objectList';
+import logger from '../utils/logger';
 
 cc.Class({
   extends: cc.Component,
@@ -22,36 +23,48 @@ cc.Class({
       return;
     }
 
-    const selfInfo = selfCollider.getAABB();
+    logger.INFO(`player contact notch: ${this.match}`);
 
-    const otherInfo = otherCollider.getAABB();
-
-    this.notchDetect(selfInfo, otherInfo);
+    this.notchDetect();
 
     // play animation
   },
 
-  notchDetect(selfInfo, otherInfo) {
+  onEndContact(contact, selfCollider, otherCollider) {
+    const { node } = otherCollider.body;
+
+    if (node.group !== 'player') {
+      return;
+    }
+
+    logger.INFO(`player discontact notch: ${this.match}`);
+
+    this.notchUnDetect();
+  },
+
+  notchDetect() {
     const event = new cc.Event.EventCustom('notchDetect', true);
 
     event.setUserData({
       require: this.require,
       match: this.match,
-      selfInfo,
-      otherInfo,
     });
 
     this.node.dispatchEvent(event);
+  },
 
-    console.log(`notch '${this.match}' detect contact`);
+  notchUnDetect() {
+    const event = new cc.Event.EventCustom('notchUnDetect', true);
+
+    this.node.dispatchEvent(event);
   },
 
   unlock() {
-    console.log(`notch unlock : ${this.match}`);
+    logger.INFO(`notch unlock: ${this.match}`);
   },
 
   report() {
-    console.log(`notch report : ${this.match}`);
+    logger.INFO(`notch report from: ${this.match}`);
     return {
       require: this.require,
       match: this.match,

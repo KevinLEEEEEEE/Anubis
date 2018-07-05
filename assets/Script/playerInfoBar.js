@@ -3,34 +3,34 @@ import { Info } from './Global';
 let self = null;
 
 const infoBar = {
-    updateData() {
-        self.updateData();
-    },
+  updateData() {
+    self.updateData();
+  },
 };
 
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        HP: {
-            default: null,
-            type: cc.Label,
-        },
-        XP: {
-            default: null,
-            type: cc.Label,
-        },
+  properties: {
+    HP: {
+      default: null,
+      type: cc.Label,
     },
+    XP: {
+      default: null,
+      type: cc.Label,
+    },
+  },
 
-    onLoad() {
-        this.updateData();
-        self = this;
-    },
+  onLoad() {
+    this.updateData();
+    self = this;
+  },
 
-    updateData() {
-        this.HP.string = Info.getHP();
-        this.XP.string = Info.getXP();
-    },
+  updateData() {
+    this.HP.string = Info.getHP();
+    this.XP.string = Info.getXP();
+  },
 });
 
 export default infoBar;

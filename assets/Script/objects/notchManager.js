@@ -1,5 +1,6 @@
 import storageManager from '../localStorage/storageManager';
 import isEqual from '../utils/isEqual';
+import logger from '../utils/logger';
 
 cc.Class({
   extends: cc.Component,
@@ -15,6 +16,7 @@ cc.Class({
 
   onLoad() {
     this.node.on('notchDetect', this.notchDetect, this);
+    this.node.on('notchUnDetect', this.notchUnDetect, this);
 
     const inventory = cc.find('Canvas/inventory');
     this.inventoryMethods = inventory.getComponent('inventoryManager');
@@ -27,14 +29,16 @@ cc.Class({
   init() {
     this.notchList = this.pullFromCache();
 
+    logger.INFO('init notchManager');
+    logger.DEBUG('notchList from cache:', this.notchList);
+
     const { children } = this.node;
 
     children.forEach((child) => {
-      console.log('request notches for init report');
-
       const methods = child.getComponent('notchObject');
       const info = methods.report();
       if (this.notchList.find(notch => isEqual(notch, info))) {
+        logger.INFO(`request from notch manager to unlock notch: ${info.match}`);
         methods.unlock();
       }
     });
@@ -44,13 +48,11 @@ cc.Class({
 
   notchDetect(e) {
     const { target } = e;
-    const {
-      require, match, selfInfo, otherInfo,
-    } = e.getUserData();
+    const { require, match } = e.getUserData();
 
     e.stopPropagation();
 
-    console.log(`notchManager get detect report from : ${match}`);
+    logger.INFO(`notchManager reveive contact event from: ${match}`);
 
     this.inventoryMethods.check({
       require,
@@ -58,49 +60,22 @@ cc.Class({
       match,
     })
       .then(() => {
-        console.log('open successfully');
+        logger.INFO('notch unlock successfully');
 
-        this.unlockNotch(target); // open the door
+        this.unlockNotch(target); // unlock the notch
 
         this.addToLocalCache({
           require,
           match,
         });
       }, () => {
-        console.log('failed to open the door');
+        logger.INFO('notch unlock failed');
         // nothing happened
       });
-
-    this.timigDetection(target, selfInfo, otherInfo);
   },
 
   notchUnDetect() {
     this.inventoryMethods.uncheck();
-  },
-
-  timigDetection(target, selfInfo, otherInfo) {
-    const targetPos = target.convertToWorldSpaceAR(target.getPosition());
-
-    const { width: targetWidth } = selfInfo;
-    const { width: otherWidth } = otherInfo;
-
-    const totalWidth = targetWidth + otherWidth;
-
-    const callBack = () => {
-      const playerPos = this.player.convertToWorldSpaceAR(this.player.getPosition());
-
-      const distance = cc.pDistance(playerPos, targetPos);
-      const touchDistance = (totalWidth ** 2) + ((playerPos.y - targetPos.y) ** 2);
-
-      if (distance ** 2 > touchDistance) {
-        console.log('notch detection report an out if range message');
-
-        this.notchUnDetect();
-        this.unschedule(callBack);
-      }
-    };
-
-    this.schedule(callBack, this.detectRate);
   },
 
   unlockNotch(target) {

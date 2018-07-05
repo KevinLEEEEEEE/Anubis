@@ -1,6 +1,7 @@
 import storageManager from '../localStorage/storageManager';
 import objectList from '../config/objectList';
 import isEqual from '../utils/isEqual';
+import logger from '../utils/logger';
 
 const state = cc.Enum({
   off: 0,
@@ -56,6 +57,9 @@ cc.Class({
 
   init() {
     this.inventoryList = this.pullFromCache();
+
+    logger.INFO('init inventoryManager');
+    logger.DEBUG('inventoryList from cache:', this.inventoryList);
 
     this.inventoryList.forEach((object) => {
       const { type, level, match } = object;
@@ -115,6 +119,8 @@ cc.Class({
   // --------------------------------------------------------------------------------------------
 
   refresh() { // the main refresh function is called when the state changes
+    logger.DEBUG(`inventory state change to ${this.state}`);
+
     switch (this.state) {
     case state.off:
       this.off();
@@ -187,7 +193,7 @@ cc.Class({
     });
   },
 
-  removeNode(info) {
+  removeNode(info, node) {
     // remove the node fron inventory
     // cc.log(info.node);
 
@@ -196,6 +202,10 @@ cc.Class({
     this.inventoryList.splice(index, 1);
 
     this.deleteFromLocalCache(info);
+
+    const nodeMethods = node.getComponent('inventoryObjects');
+
+    nodeMethods.remove();
   },
 
   // --------------------------------------------------------------------------------------------
@@ -236,7 +246,7 @@ cc.Class({
           type,
           level,
           match,
-        });
+        }, info.node);
         // object disappear
         // write into cache
       } else {
@@ -249,6 +259,8 @@ cc.Class({
 
   uncheck() {
     if (this.checkInfo !== null) {
+      logger.INFO('player leave unlock range');
+
       this.state = state.off;
       this.checkInfo.active = false;
     }
@@ -256,6 +268,8 @@ cc.Class({
 
   check(message) {
     this.state = state.foreverOn;
+
+    logger.INFO('player within unlock range');
 
     return new Promise((resolve, reject) => {
       this.checkInfo = {

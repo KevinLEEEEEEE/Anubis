@@ -1,3 +1,4 @@
+import logger from '../utils/logger';
 
 cc.Class({
   extends: cc.Component,
@@ -18,18 +19,23 @@ cc.Class({
     this.type = type;
     this.level = level;
     this.match = match;
+    logger.DEBUG(`init inventoryObject - type: ${type} level: ${level} match: ${match}`);
   },
 
   mousedown() {
     // highlight the item
 
-    // distance detect required
+    logger.INFO('inventoryObject detect mousedown');
     this.inventoryMethods.mousedown({
       node: this,
       type: this.type,
       level: this.level,
       match: this.match,
     });
+  },
+
+  remove() {
+    this.node.active = false;
   },
 
 });
