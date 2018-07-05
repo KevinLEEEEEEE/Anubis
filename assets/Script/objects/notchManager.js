@@ -1,4 +1,5 @@
 import storageManager from '../localStorage/storageManager';
+import isEqual from '../utils/isEqual';
 
 cc.Class({
   extends: cc.Component,
@@ -18,12 +19,28 @@ cc.Class({
     const inventory = cc.find('Canvas/inventory');
     this.inventoryMethods = inventory.getComponent('inventoryManager');
 
+    this.targetPos = cc.v2(0, 0);
+
     this.init();
   },
 
   init() {
-    this.targetPos = cc.v2(0, 0);
+    this.notchList = this.pullFromCache();
+
+    const { children } = this.node;
+
+    children.forEach((child) => {
+      console.log('request notches for init report');
+
+      const methods = child.getComponent('notchObject');
+      const info = methods.report();
+      if (this.notchList.find(notch => isEqual(notch, info))) {
+        methods.unlock();
+      }
+    });
   },
+
+  // --------------------------------------------------------------------------------------------
 
   notchDetect(e) {
     const { target } = e;
@@ -33,6 +50,8 @@ cc.Class({
 
     e.stopPropagation();
 
+    console.log(`notchManager get detect report from : ${match}`);
+
     this.inventoryMethods.check({
       require,
       level: this.level,
@@ -41,9 +60,12 @@ cc.Class({
       .then(() => {
         console.log('open successfully');
 
-        this.unlockNotch(target);
-        // door open
-        // write into cache
+        this.unlockNotch(target); // open the door
+
+        this.addToLocalCache({
+          require,
+          match,
+        });
       }, () => {
         console.log('failed to open the door');
         // nothing happened
@@ -71,6 +93,8 @@ cc.Class({
       const touchDistance = (totalWidth ** 2) + ((playerPos.y - targetPos.y) ** 2);
 
       if (distance ** 2 > touchDistance) {
+        console.log('notch detection report an out if range message');
+
         this.notchUnDetect();
         this.unschedule(callBack);
       }
@@ -83,6 +107,14 @@ cc.Class({
     const notchMethods = target.getComponent('notchObject');
 
     notchMethods.unlock();
+  },
+
+  // --------------------------------------------------------------------------------------------
+
+  addToLocalCache(item) {
+    this.notchList.push(item);
+
+    this.pushToCache(); // save btn required
   },
 
   pullFromCache() {

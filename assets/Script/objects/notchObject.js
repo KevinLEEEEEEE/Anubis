@@ -13,8 +13,6 @@ cc.Class({
 
   // LIFE-CYCLE CALLBACKS:
 
-  // onLoad () {},
-
   onBeginContact(contact, selfCollider, otherCollider) {
     const { node } = otherCollider.body;
 
@@ -31,12 +29,6 @@ cc.Class({
     this.notchDetect(selfInfo, otherInfo);
 
     // play animation
-
-    // open the door
-  },
-
-  tracking() {
-
   },
 
   notchDetect(selfInfo, otherInfo) {
@@ -50,15 +42,19 @@ cc.Class({
     });
 
     this.node.dispatchEvent(event);
-  },
 
-  notchUnDetect() {
-
+    console.log(`notch '${this.match}' detect contact`);
   },
 
   unlock() {
-    console.log('unlock');
+    console.log(`notch unlock : ${this.match}`);
   },
 
-  // update (dt) {},
+  report() {
+    console.log(`notch report : ${this.match}`);
+    return {
+      require: this.require,
+      match: this.match,
+    };
+  },
 });

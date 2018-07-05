@@ -16,7 +16,7 @@ const storageManeger = {
   notchCache: null,
 
   readInventoryCache() {
-    const inventoryCache = _storageManager.read('inventory');
+    const inventoryCache = _storageManager.read('inventory') || [];
 
     this.inventoryCache = inventoryCache;
 
@@ -52,7 +52,7 @@ const storageManeger = {
     if (Reflect.has(this.notchCache, level)) {
       return this.notchCache[level];
     }
-    return null;
+    return [];
   },
 
   writeLevelNotchCache(level, list) {

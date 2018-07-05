@@ -1,5 +1,6 @@
 import storageManager from '../localStorage/storageManager';
 import objectList from '../config/objectList';
+import isEqual from '../utils/isEqual';
 
 const state = cc.Enum({
   off: 0,
@@ -190,27 +191,11 @@ cc.Class({
     // remove the node fron inventory
     // cc.log(info.node);
 
-    const index = this.inventoryList.findIndex(collection => this.isEqual(info, collection));
+    const index = this.inventoryList.findIndex(collection => isEqual(info, collection));
 
     this.inventoryList.splice(index, 1);
 
     this.deleteFromLocalCache(info);
-  },
-
-  isEqual(a, b) {
-    let result = true;
-
-    if (Object.keys(a).length !== Object.keys(b).length) {
-      result = false;
-    }
-
-    Object.keys(a).forEach((key) => {
-      if (!(Reflect.has(b, key) && a[key] === b[key])) {
-        result = false;
-      }
-    });
-
-    return result;
   },
 
   // --------------------------------------------------------------------------------------------
@@ -224,7 +209,7 @@ cc.Class({
   },
 
   pullFromCache() {
-    return storageManager.readInventoryCache() || [];
+    return storageManager.readInventoryCache();
   },
 
   pushToCache() {

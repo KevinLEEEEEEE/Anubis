@@ -1,5 +1,6 @@
 import storageManager from '../localStorage/storageManager';
 import objectList from '../config/objectList';
+import isEqual from '../utils/isEqual';
 
 cc.Class({
   extends: cc.Component,
@@ -27,26 +28,10 @@ cc.Class({
     children.forEach((child) => {
       const methods = child.getComponent('collectionObject');
       const info = methods.report();
-      if (this.collectionList.find(collection => this.isEqual(collection, info))) {
+      if (this.collectionList.find(collection => isEqual(collection, info))) {
         methods.remove();
       }
     });
-  },
-
-  isEqual(a, b) {
-    let result = true;
-
-    if (Object.keys(a).length !== Object.keys(b).length) {
-      result = false;
-    }
-
-    Object.keys(a).forEach((key) => {
-      if (!(Reflect.has(b, key) && a[key] === b[key])) {
-        result = false;
-      }
-    });
-
-    return result;
   },
 
   // --------------------------------------------------------------------------------------------
