@@ -27,7 +27,9 @@ cc.Class({
 
   notchDetect(e) {
     const { target } = e;
-    const { require, match } = e.getUserData();
+    const {
+      require, match, selfInfo, otherInfo,
+    } = e.getUserData();
 
     e.stopPropagation();
 
@@ -44,26 +46,35 @@ cc.Class({
         // write into cache
       }, () => {
         console.log('failed to open the door');
+        // nothing happened
       });
 
-    this.targetPos = target.convertToWorldSpaceAR(target.getPosition());
-
-    this.timigDetection(target);
+    this.timigDetection(target, selfInfo, otherInfo);
   },
 
   notchUnDetect() {
     this.inventoryMethods.uncheck();
   },
 
-  timigDetection(target) {
+  timigDetection(target, selfInfo, otherInfo) {
+    const targetPos = target.convertToWorldSpaceAR(target.getPosition());
+
+    const { width: targetWidth } = selfInfo;
+    const { width: otherWidth } = otherInfo;
+
+    const totalWidth = targetWidth + otherWidth;
+
     const callBack = () => {
       const playerPos = this.player.convertToWorldSpaceAR(this.player.getPosition());
-      const distance = cc.pDistance(playerPos, this.targetPos);
-      if (distance > this.distance) {
+
+      const distance = cc.pDistance(playerPos, targetPos);
+      const touchDistance = (totalWidth ** 2) + ((playerPos.y - targetPos.y) ** 2);
+
+      if (distance ** 2 > touchDistance) {
         this.notchUnDetect();
         this.unschedule(callBack);
       }
-    }
+    };
 
     this.schedule(callBack, this.detectRate);
   },

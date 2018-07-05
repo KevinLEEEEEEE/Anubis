@@ -264,6 +264,7 @@ cc.Class({
 
   uncheck() {
     if (this.checkInfo !== null) {
+      this.state = state.off;
       this.checkInfo.active = false;
     }
   },

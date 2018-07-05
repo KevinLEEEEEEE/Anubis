@@ -24,7 +24,11 @@ cc.Class({
       return;
     }
 
-    this.notchDetect();
+    const selfInfo = selfCollider.getAABB();
+
+    const otherInfo = otherCollider.getAABB();
+
+    this.notchDetect(selfInfo, otherInfo);
 
     // play animation
 
@@ -35,12 +39,14 @@ cc.Class({
 
   },
 
-  notchDetect() {
+  notchDetect(selfInfo, otherInfo) {
     const event = new cc.Event.EventCustom('notchDetect', true);
 
     event.setUserData({
       require: this.require,
       match: this.match,
+      selfInfo,
+      otherInfo,
     });
 
     this.node.dispatchEvent(event);
