@@ -66,7 +66,7 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0,
-    "autoReleaseAssets": null
+    "autoReleaseAssets": false
   },
   {
     "__type__": "cc.Node",
@@ -3002,7 +3002,7 @@
     }
   },
   {
-    "__type__": "f57a37ILuZHhY+1slZZ0iz5",
+    "__type__": "ad1b4IUgWpJqI/g3ieQYQXw",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -3012,9 +3012,14 @@
     "target": {
       "__id__": 49
     },
-    "sizeNode": {
-      "__id__": 4
-    }
+    "camera": {
+      "__id__": 3
+    },
+    "followX": 300,
+    "followY": 150,
+    "minFollowDist": 100,
+    "followRatio": 0.02,
+    "minRatio": 0.03
   },
   {
     "__type__": "cc.Node",
