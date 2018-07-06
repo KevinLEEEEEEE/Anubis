@@ -52,8 +52,8 @@
     "default",
     "player",
     "bullet",
-    "pig",
-    "hurtBall"
+    "notch",
+    "undefined"
   ],
   "simulator-orientation": false,
   "simulator-resolution": {
