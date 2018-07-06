@@ -29,7 +29,7 @@ cc.Class({
   init() {
     this.notchList = this.pullFromCache();
 
-    logger.INFO('init notchManager');
+    logger.INFO('****** init notchManager ******');
     logger.DEBUG('notchList from cache:', this.notchList);
 
     const { children } = this.node;

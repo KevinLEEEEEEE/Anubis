@@ -58,7 +58,7 @@ cc.Class({
   init() {
     this.inventoryList = this.pullFromCache();
 
-    logger.INFO('init inventoryManager');
+    logger.INFO('****** init inventoryManager ******');
     logger.DEBUG('inventoryList from cache:', this.inventoryList);
 
     this.inventoryList.forEach((object) => {

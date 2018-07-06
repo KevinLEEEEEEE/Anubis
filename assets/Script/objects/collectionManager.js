@@ -24,7 +24,7 @@ cc.Class({
   init() {
     this.collectionList = this.pullFromCache();
 
-    logger.INFO('init collectionManager');
+    logger.INFO('****** init collectionManager  ******');
     logger.DEBUG('collectionList from cache:', this.collectionList);
 
     const { children } = this.node;
