@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "c7d551dc-ad05-4054-939a-4174d7a2c50b",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "Hanging Brick (Move Vertical)": {
+      "ver": "1.0.3",
+      "uuid": "e9231b16-3a7c-442a-a24f-8dbb51430f14",
+      "rawTextureUuid": "c7d551dc-ad05-4054-939a-4174d7a2c50b",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 396,
+      "height": 120,
+      "rawWidth": 396,
+      "rawHeight": 120,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

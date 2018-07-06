@@ -1,41 +1,78 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
+import localStorage from './localStorage';
 
-cc.Class({
-    extends: cc.Component,
+const _storageManager = {
+  read(key) {
+    const value = localStorage.read(key);
+    return value;
+  },
+  write(key, value) {
+    localStorage.write(key, value);
+  },
+};
 
-    properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
-    },
+const storageManeger = {
+  inventoryCache: null,
+  collectionCache: null,
+  notchCache: null,
 
-    // LIFE-CYCLE CALLBACKS:
+  readInventoryCache() {
+    const inventoryCache = _storageManager.read('inventory') || [];
 
-    // onLoad () {},
+    this.inventoryCache = inventoryCache;
 
-    start () {
+    // if false, then init localStorage
 
-    },
+    return inventoryCache;
+  },
 
-    // update (dt) {},
-});
+  writeInventoryCache(list) {
+    this.inventoryCache = list;
+    this.save();
+  },
+
+  readLevelCollectionCache(level) {
+    if (this.collectionCache === null) {
+      this.collectionCache = _storageManager.read('collection') || {};
+    }
+    if (Reflect.has(this.collectionCache, level)) {
+      return this.collectionCache[level];
+    }
+    return [];
+  },
+
+  writeLevelCollectionCache(level, list) {
+    this.collectionCache[level] = list;
+    this.save();
+  },
+
+  readLevelNotchCache(level) {
+    if (this.notchCache === null) {
+      this.notchCache = _storageManager.read('notch') || {};
+    }
+    if (Reflect.has(this.notchCache, level)) {
+      return this.notchCache[level];
+    }
+    return [];
+  },
+
+  writeLevelNotchCache(level, list) {
+    this.notchCache[level] = list;
+    this.save();
+  },
+
+  readInfoCache() {
+
+  },
+
+  writeInfoCache() {
+
+  },
+
+  save() {
+    _storageManager.write('inventory', this.inventoryCache);
+    _storageManager.write('collection', this.collectionCache);
+    _storageManager.write('notch', this.notchCache);
+  },
+};
+
+export default storageManeger;
