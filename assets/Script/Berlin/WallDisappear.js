@@ -1,13 +1,3 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
 cc.Class({
     extends: cc.Component,
 
@@ -15,14 +5,6 @@ cc.Class({
        disappearTime: 1.5,//墙消失的时间
        refreshTime: 1.5,//墙恢复的时间
     },
-
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {},
-
-    // start () {},
-
-    // update (dt) {},
 
     onBeginContact(contact, selfCollider, otherCollider){
 
@@ -47,7 +29,7 @@ cc.Class({
         }
     },
 
-    disappearWall(){
+    /*disappearWall(){
         this.scheduleOnce(() =>{
             //Wall节点的位置改变
             this.node.active = false;
@@ -56,14 +38,14 @@ cc.Class({
 
         },this.disappearTime);
 
-    },
+    },*/
 
-    refreshWall(){
+    /*refreshWall(){
 
         this.scheduleOnce(() => {
             console.log('Set out to refresh!');
             this.node.active = true;
         },this.refreshTime);
         
-    }
+    }*/
 });
