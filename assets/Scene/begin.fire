@@ -3585,7 +3585,7 @@
     "node": {
       "__id__": 42
     },
-    "_enabled": true,
+    "_enabled": false,
     "bulletPrefab": {
       "__uuid__": "f99f1fe4-b5d5-4d5c-9637-a7cca7f0ac07"
     }
