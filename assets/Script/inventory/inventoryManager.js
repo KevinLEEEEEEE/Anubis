@@ -1,4 +1,4 @@
-import storageManager from '../localStorage/storageManager';
+import Game from '../Game';
 import objectList from '../config/objectList';
 import isEqual from '../utils/isEqual';
 import logger from '../utils/logger';
@@ -219,11 +219,13 @@ cc.Class({
   },
 
   pullFromCache() {
-    return storageManager.readInventoryCache();
+    // return storageManager.readInventoryCache();
+    return Game.getInventoryCache();
   },
 
   pushToCache() {
-    storageManager.writeInventoryCache(this.inventoryList);
+    // storageManager.writeInventoryCache(this.inventoryList);
+    Game.setInventoryCache(this.inventoryList);
   },
 
   // --------------------------------------------------------------------------------------------

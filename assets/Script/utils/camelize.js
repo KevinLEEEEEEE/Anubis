@@ -1,4 +1,3 @@
-
 const camelize = (context) => {
   let result = null;
   switch (context.length) {
@@ -15,9 +14,10 @@ const camelize = (context) => {
   return result;
 };
 
-camelize.prepend = (context, prepend) => {
-  const tmp = camelize(context);
-  return prepend + tmp;
-};
+camelize.insertBefore = (context, before) => before + camelize(context);
+
+camelize.insertAfter = (context, after) => camelize(context) + after;
+
+camelize.insertBoth = (before, context, after) => before + camelize(context) + after;
 
 export default camelize;
