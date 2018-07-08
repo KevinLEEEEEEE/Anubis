@@ -1,4 +1,5 @@
 import storageManager from '../localStorage/storageManager';
+import Game from '../Game';
 import isEqual from '../utils/isEqual';
 import logger from '../utils/logger';
 
@@ -93,11 +94,11 @@ cc.Class({
   },
 
   pullFromCache() {
-    return storageManager.readLevelNotchCache(this.level) || {};
+    return Game.getNotchCache(this.level);
   },
 
   pushToCache() {
-    storageManager.writeLevelNotchCache(this.level, this.notchList);
+    Game.setNotchCache(this.notchList, this.level);
   },
 
   // update (dt) {},

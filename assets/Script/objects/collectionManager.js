@@ -1,4 +1,5 @@
 import storageManager from '../localStorage/storageManager';
+import Game from '../Game';
 import objectList from '../config/objectList';
 import isEqual from '../utils/isEqual';
 import logger from '../utils/logger';
@@ -93,11 +94,11 @@ cc.Class({
   },
 
   pullFromCache() {
-    return storageManager.readLevelCollectionCache(this.level);
+    return Game.getCollectionCache(this.level);
   },
 
   pushToCache() {
-    storageManager.writeLevelCollectionCache(this.level, this.collectionList);
+    Game.setCollectionCache(this.collectionList, this.level);
   },
 
   // update (dt) {},

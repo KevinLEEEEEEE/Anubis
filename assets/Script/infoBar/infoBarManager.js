@@ -1,3 +1,4 @@
+import Game from '../Game';
 import logger from '../utils/logger';
 
 cc.Class({
