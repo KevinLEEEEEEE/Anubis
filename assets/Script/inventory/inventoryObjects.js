@@ -3,35 +3,38 @@ import logger from '../utils/logger';
 cc.Class({
   extends: cc.Component,
 
-  properties: {
-  },
-
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
     this.node.on(cc.Node.EventType.MOUSE_DOWN, this.mousedown, this);
-
-    const inventory = cc.find('Canvas/inventory');
-    this.inventoryMethods = inventory.getComponent('inventoryManager');
+    this.node.on(cc.Node.EventType.MOUSE_ENTER, this.mouseenter, this);
+    this.node.on(cc.Node.EventType.MOUSE_LEAVE, this.mouseleave, this);
   },
 
-  init(type, level, match) {
-    this.type = type;
-    this.level = level;
-    this.match = match;
-    logger.DEBUG(`init inventoryObject - type: ${type} level: ${level} match: ${match}`);
+  init(info) {
+    this.info = info;
+
+    this.node.opacity = 150;
+
+    logger.DEBUG(`init inventoryObject - level: ${info.level} match: ${info.match}`);
   },
 
   mousedown() {
-    // highlight the item
-
     logger.INFO('inventoryObject detect mousedown');
-    this.inventoryMethods.mousedown({
-      node: this,
-      type: this.type,
-      level: this.level,
-      match: this.match,
-    });
+
+    const event = new cc.Event.EventCustom('runCheck', true);
+
+    event.setUserData(this.info);
+
+    this.node.dispatchEvent(event);
+  },
+
+  mouseenter() {
+    this.node.opacity = 255;
+  },
+
+  mouseleave() {
+    this.node.opacity = 150;
   },
 
   remove() {

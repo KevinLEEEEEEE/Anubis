@@ -1,16 +1,24 @@
-import storageManager from '../localStorage/storageManager';
 import Game from '../Game';
 import isEqual from '../utils/isEqual';
 import logger from '../utils/logger';
+
+const Notch = cc.Class({
+  name: 'notch',
+  properties: {
+    match: -1,
+    node: cc.Node,
+  },
+});
 
 cc.Class({
   extends: cc.Component,
 
   properties: {
     level: 0,
-    distance: 200,
-    detectRate: 1,
-    player: cc.Node,
+    notchNodeList: {
+      default: [],
+      type: [Notch],
+    },
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -22,53 +30,57 @@ cc.Class({
     const inventory = cc.find('Canvas/inventory');
     this.inventoryMethods = inventory.getComponent('inventoryManager');
 
-    this.targetPos = cc.v2(0, 0);
-
-    this.init();
+    this.initCache();
   },
 
-  init() {
+  initCache() {
     this.notchList = this.pullFromCache();
 
     logger.INFO('****** init notchManager ******');
     logger.DEBUG('notchList from cache:', this.notchList);
 
-    const { children } = this.node;
+    this.notchNodeList.forEach((nNode) => {
+      const { match, node } = nNode; // set the default
 
-    children.forEach((child) => {
-      const methods = child.getComponent('notchObject');
-      const info = methods.report();
-      if (this.notchList.find(notch => isEqual(notch, info))) {
-        logger.INFO(`request from notch manager to unlock notch: ${info.match}`);
-        methods.unlock();
+      if (this.isUnlocked({ match })) {
+        node.getComponent('notchObject').remove();
+      } else {
+        node.getComponent('notchObject').init({ match });
       }
     });
+  },
+
+  isUnlocked(info) {
+    let result = false;
+
+    this.notchList.forEach((notch) => {
+      if (isEqual(notch, info)) {
+        result = true;
+      }
+    });
+    return result;
   },
 
   // --------------------------------------------------------------------------------------------
 
   notchDetect(e) {
     const { target } = e;
-    const { require, match } = e.getUserData();
+    const info = e.getUserData();
 
     e.stopPropagation();
 
-    logger.INFO(`notchManager reveive contact event from: ${match}`);
+    logger.INFO(`notchManager reveive contact event from: ${info.match}`);
 
     this.inventoryMethods.check({
-      require,
+      match: info.match,
       level: this.level,
-      match,
     })
       .then(() => {
         logger.INFO('notch unlock successfully');
 
         this.unlockNotch(target); // unlock the notch
 
-        this.addToLocalCache({
-          require,
-          match,
-        });
+        this.addToLocalCache(info);
       }, () => {
         logger.INFO('notch unlock failed');
         // nothing happened

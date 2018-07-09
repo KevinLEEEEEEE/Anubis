@@ -1,88 +1,85 @@
-import storageManager from '../localStorage/storageManager';
 import Game from '../Game';
-import objectList from '../config/objectList';
 import isEqual from '../utils/isEqual';
 import logger from '../utils/logger';
+
+const Collection = cc.Class({
+  name: 'collection',
+  properties: {
+    match: -1,
+    node: cc.Node,
+  },
+});
 
 cc.Class({
   extends: cc.Component,
 
   properties: {
     level: 0,
+    inventory: cc.Node,
+    collectionNodeList: {
+      default: [],
+      type: [Collection],
+    },
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
+    logger.INFO('****** collectionManager init start ******');
+
     this.node.on('collectionDetect', this.collectionDetect, this);
 
-    const inventory = cc.find('Canvas/inventory');
-    this.inventoryMethods = inventory.getComponent('inventoryManager');
+    this.inventoryMethods = this.inventory.getComponent('inventoryManager');
 
-    this.init();
+    this.initCache();
+
+    logger.INFO('****** collectionManager init end ******');
   },
 
-  init() {
+  initCache() {
     this.collectionList = this.pullFromCache();
 
     logger.INFO('****** init collectionManager  ******');
     logger.DEBUG('collectionList from cache:', this.collectionList);
 
-    const { children } = this.node;
+    this.collectionNodeList.forEach((cNode) => {
+      const { match, node } = cNode; // set the default
 
-    children.forEach((child) => {
-      const methods = child.getComponent('collectionObject');
-      const info = methods.report();
-      if (this.collectionList.find(collection => isEqual(collection, info))) {
-        methods.remove();
+      if (this.isCollected({ match })) {
+        node.getComponent('collectionObject').remove();
+      } else {
+        node.getComponent('collectionObject').init({ match });
       }
     });
+  },
+
+  isCollected(info) {
+    let result = false;
+
+    this.collectionList.forEach((collection) => {
+      if (isEqual(collection, info)) {
+        result = true;
+      }
+    });
+    return result;
   },
 
   // --------------------------------------------------------------------------------------------
 
   collectionDetect(e) {
     const message = e.getUserData();
-    const { type, match, recovery } = message;
 
     e.stopPropagation();
 
-    switch (type) {
-    case objectList.key:
-      this.inventoryAdd(type, match);
-      break;
-    case objectList.blood:
-      this.bloodAdd(type, match, recovery);
-      break;
-    case objectList.fragment:
-      this.fragmentAdd(type, match);
-      break;
-    default:
-    }
+    this.inventoryAdd(message);
   },
 
-  inventoryAdd(type, match) {
-    const inventory = cc.find('Canvas/inventory');
-    const inventoryMethods = inventory.getComponent('inventoryManager');
+  inventoryAdd(info) {
+    this.addToLocalCache(info);
 
-    inventoryMethods.add({
-      type,
+    this.inventoryMethods.add(Object.assign(info, {
       level: this.level,
-      match,
-    }); // add to the inventory
-
-    this.addToLocalCache({
-      type,
-      match,
-    });
-  },
-
-  bloodAdd() {
-
-  },
-
-  fragmentAdd() {
-
+    })); // add to the inventory with level data
   },
 
   // --------------------------------------------------------------------------------------------
@@ -100,6 +97,4 @@ cc.Class({
   pushToCache() {
     Game.setCollectionCache(this.collectionList, this.level);
   },
-
-  // update (dt) {},
 });
