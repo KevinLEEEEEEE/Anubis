@@ -1,4 +1,4 @@
-let sth = cc.Class(new Proxy({
+const sth = cc.Class(new Proxy({
   name: 'aLight',
   properties: {
     row: 0,
@@ -10,22 +10,25 @@ let sth = cc.Class(new Proxy({
   },
   set(obj, prop, value) {
     obj[prop] = value;
-  } 
-}))
+  },
+}));
 
 cc.Class({
   extends: cc.Component,
   properties: {
-    lights:{
+    lights: {
       default: [],
       type: sth,
-    }
+    },
+    whiteNum: 0,
+    bg: cc.Node,
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
-
+    this.color = cc.Color.WHITE;
+    this.door = cc.find('door');
   },
 
   start() {
@@ -36,15 +39,50 @@ cc.Class({
   },
 
   click(e) {
-    var hang = e.target.getComponent('lightToggle').getPX();
-    var lie = e.target.getComponent('lightToggle').getPY();
-    for(var i = 0; i < 3; i++)
-      for(var j = 0; j < 3; j++){
-        if(i === hang || j === lie){
+    const lightToggle = e.target.getComponent('lightToggle');
+    const row = lightToggle.getPX();
+    const col = lightToggle.getPY();
+    for (let i = 0; i < 3; i += 1) {
+      for (let j = 0; j < 3; j += 1) {
+        if (i === row || j === col) {
           const cell = this.lights[i].light[j];
-          this.lights[i].light[j].getComponent('lightToggle').lightToggle();
+          if (cell._color.equals(this.color)) {
+            cell.getComponent('lightToggle').lightOff();
+            this.setNumReduce();
+          } else {
+            cell.getComponent('lightToggle').lightUp();
+            this.setNumPlus();
+            this.checkNum();
+          }
         }
       }
+    }
+  },
+  checkNum() {
+    if (this.getNum() === 9) {
+      cc.log('你打开了门！');
+      this.openTheDoor();
+    }
+  },
+  openTheDoor() {
+    this.scheduleOnce(() => {
+      const action = cc.moveTo(0.1, 1500, 1500);
+      this.node.runAction(action);
+      this.bg.setOpacity(0);
+      // 播放帧动画
+      this.scheduleOnce(() => {
+        this.door.active = false;
+      }, 2);
+    }, 2);
+  },
+  getNum() {
+    return this.whiteNum;
+  },
+  setNumPlus() {
+    this.whiteNum += 1;
+  },
+  setNumReduce() {
+    this.whiteNum -= 1;
   },
 
 

@@ -11,6 +11,7 @@ cc.Class({
 
   onLoad() {
     this.isLight = false;
+    this.window = cc.find('litTheLight');
   },
 
   start() {
@@ -19,18 +20,16 @@ cc.Class({
 
   // update() {
   // },
-  lightToggle() {
-    this.isLight = !this.isLight;
-    if (this.isLight === true) {
-      this.node.setColor(cc.Color.WHITE);
-    } else {
-      this.node.setColor(cc.Color.BLACK);
-    }
+  lightUp() {
+    this.node.setColor(cc.Color.WHITE);
   },
-  getPX(){
-    return this.positionX; 
+  lightOff() {
+    this.node.setColor(cc.Color.BLACK);
   },
-  getPY(){
-    return this.positionY; 
-  }
+  getPX() {
+    return this.positionX;
+  },
+  getPY() {
+    return this.positionY;
+  },
 });

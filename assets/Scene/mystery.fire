@@ -29,13 +29,13 @@
         "__id__": 58
       },
       {
-        "__id__": 95
+        "__id__": 96
       },
       {
         "__id__": 91
       },
       {
-        "__id__": 97
+        "__id__": 98
       }
     ],
     "_tag": -1,
@@ -83,7 +83,7 @@
         "__id__": 3
       },
       {
-        "__id__": 94
+        "__id__": 95
       }
     ],
     "_prefab": null,
@@ -3025,6 +3025,9 @@
       },
       {
         "__id__": 93
+      },
+      {
+        "__id__": 94
       }
     ],
     "_prefab": null,
@@ -3229,6 +3232,18 @@
     "_atlas": null
   },
   {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 87
+    },
+    "_enabled": true,
+    "_defaultClip": null,
+    "_clips": [],
+    "playOnLoad": false
+  },
+  {
     "__type__": "ad1b4IUgWpJqI/g3ieQYQXw",
     "_name": "",
     "_objFlags": 0,
@@ -3260,7 +3275,7 @@
     "_active": false,
     "_components": [
       {
-        "__id__": 96
+        "__id__": 97
       }
     ],
     "_prefab": null,
@@ -3305,7 +3320,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 95
+      "__id__": 96
     },
     "_enabled": true,
     "isAlignOnce": true,
@@ -3335,41 +3350,41 @@
     },
     "_children": [
       {
-        "__id__": 98
+        "__id__": 99
       },
       {
-        "__id__": 103
+        "__id__": 104
       },
       {
-        "__id__": 108
+        "__id__": 109
       },
       {
-        "__id__": 113
+        "__id__": 114
       },
       {
-        "__id__": 118
+        "__id__": 119
       },
       {
-        "__id__": 123
+        "__id__": 124
       },
       {
-        "__id__": 128
+        "__id__": 129
       },
       {
-        "__id__": 133
+        "__id__": 134
       },
       {
-        "__id__": 138
+        "__id__": 139
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 143
+        "__id__": 144
       },
       {
-        "__id__": 144
+        "__id__": 145
       }
     ],
     "_prefab": null,
@@ -3414,20 +3429,20 @@
     "_name": "00",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 97
+      "__id__": 98
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 99
-      },
-      {
         "__id__": 100
       },
       {
-        "__id__": 102
+        "__id__": 101
+      },
+      {
+        "__id__": 103
       }
     ],
     "_prefab": null,
@@ -3472,7 +3487,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 98
+      "__id__": 99
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -3498,7 +3513,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 98
+      "__id__": 99
     },
     "_enabled": true,
     "transition": 3,
@@ -3520,7 +3535,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 101
+        "__id__": 102
       }
     ],
     "_N$interactable": true,
@@ -3558,13 +3573,13 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 98
+      "__id__": 99
     }
   },
   {
     "__type__": "cc.ClickEvent",
     "target": {
-      "__id__": 97
+      "__id__": 98
     },
     "component": "litTheLight",
     "handler": "click",
@@ -3575,7 +3590,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 98
+      "__id__": 99
     },
     "_enabled": true,
     "positionX": 0,
@@ -3586,20 +3601,20 @@
     "_name": "01",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 97
+      "__id__": 98
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 104
-      },
-      {
         "__id__": 105
       },
       {
-        "__id__": 107
+        "__id__": 106
+      },
+      {
+        "__id__": 108
       }
     ],
     "_prefab": null,
@@ -3644,7 +3659,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 103
+      "__id__": 104
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -3670,7 +3685,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 103
+      "__id__": 104
     },
     "_enabled": true,
     "transition": 3,
@@ -3692,7 +3707,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 106
+        "__id__": 107
       }
     ],
     "_N$interactable": true,
@@ -3730,13 +3745,13 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 103
+      "__id__": 104
     }
   },
   {
     "__type__": "cc.ClickEvent",
     "target": {
-      "__id__": 97
+      "__id__": 98
     },
     "component": "litTheLight",
     "handler": "click",
@@ -3747,7 +3762,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 103
+      "__id__": 104
     },
     "_enabled": true,
     "positionX": 0,
@@ -3758,20 +3773,20 @@
     "_name": "02",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 97
+      "__id__": 98
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 109
-      },
-      {
         "__id__": 110
       },
       {
-        "__id__": 112
+        "__id__": 111
+      },
+      {
+        "__id__": 113
       }
     ],
     "_prefab": null,
@@ -3816,7 +3831,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 108
+      "__id__": 109
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -3842,7 +3857,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 108
+      "__id__": 109
     },
     "_enabled": true,
     "transition": 3,
@@ -3864,7 +3879,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 111
+        "__id__": 112
       }
     ],
     "_N$interactable": true,
@@ -3902,13 +3917,13 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 108
+      "__id__": 109
     }
   },
   {
     "__type__": "cc.ClickEvent",
     "target": {
-      "__id__": 97
+      "__id__": 98
     },
     "component": "litTheLight",
     "handler": "click",
@@ -3919,7 +3934,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 108
+      "__id__": 109
     },
     "_enabled": true,
     "positionX": 0,
@@ -3930,20 +3945,20 @@
     "_name": "10",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 97
+      "__id__": 98
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 114
-      },
-      {
         "__id__": 115
       },
       {
-        "__id__": 117
+        "__id__": 116
+      },
+      {
+        "__id__": 118
       }
     ],
     "_prefab": null,
@@ -3988,7 +4003,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 113
+      "__id__": 114
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -4014,7 +4029,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 113
+      "__id__": 114
     },
     "_enabled": true,
     "transition": 3,
@@ -4036,7 +4051,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 116
+        "__id__": 117
       }
     ],
     "_N$interactable": true,
@@ -4074,13 +4089,13 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 113
+      "__id__": 114
     }
   },
   {
     "__type__": "cc.ClickEvent",
     "target": {
-      "__id__": 97
+      "__id__": 98
     },
     "component": "litTheLight",
     "handler": "click",
@@ -4091,7 +4106,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 113
+      "__id__": 114
     },
     "_enabled": true,
     "positionX": 1,
@@ -4102,20 +4117,20 @@
     "_name": "11",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 97
+      "__id__": 98
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 119
-      },
-      {
         "__id__": 120
       },
       {
-        "__id__": 122
+        "__id__": 121
+      },
+      {
+        "__id__": 123
       }
     ],
     "_prefab": null,
@@ -4160,7 +4175,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 118
+      "__id__": 119
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -4186,7 +4201,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 118
+      "__id__": 119
     },
     "_enabled": true,
     "transition": 3,
@@ -4208,7 +4223,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 121
+        "__id__": 122
       }
     ],
     "_N$interactable": true,
@@ -4246,13 +4261,13 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 118
+      "__id__": 119
     }
   },
   {
     "__type__": "cc.ClickEvent",
     "target": {
-      "__id__": 97
+      "__id__": 98
     },
     "component": "litTheLight",
     "handler": "click",
@@ -4263,7 +4278,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 118
+      "__id__": 119
     },
     "_enabled": true,
     "positionX": 1,
@@ -4274,20 +4289,20 @@
     "_name": "12",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 97
+      "__id__": 98
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 124
-      },
-      {
         "__id__": 125
       },
       {
-        "__id__": 127
+        "__id__": 126
+      },
+      {
+        "__id__": 128
       }
     ],
     "_prefab": null,
@@ -4332,7 +4347,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 123
+      "__id__": 124
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -4358,7 +4373,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 123
+      "__id__": 124
     },
     "_enabled": true,
     "transition": 3,
@@ -4380,7 +4395,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 126
+        "__id__": 127
       }
     ],
     "_N$interactable": true,
@@ -4418,13 +4433,13 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 123
+      "__id__": 124
     }
   },
   {
     "__type__": "cc.ClickEvent",
     "target": {
-      "__id__": 97
+      "__id__": 98
     },
     "component": "litTheLight",
     "handler": "click",
@@ -4435,7 +4450,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 123
+      "__id__": 124
     },
     "_enabled": true,
     "positionX": 1,
@@ -4446,20 +4461,20 @@
     "_name": "20",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 97
+      "__id__": 98
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 129
-      },
-      {
         "__id__": 130
       },
       {
-        "__id__": 132
+        "__id__": 131
+      },
+      {
+        "__id__": 133
       }
     ],
     "_prefab": null,
@@ -4504,7 +4519,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 128
+      "__id__": 129
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -4530,7 +4545,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 128
+      "__id__": 129
     },
     "_enabled": true,
     "transition": 3,
@@ -4552,7 +4567,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 131
+        "__id__": 132
       }
     ],
     "_N$interactable": true,
@@ -4590,13 +4605,13 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 128
+      "__id__": 129
     }
   },
   {
     "__type__": "cc.ClickEvent",
     "target": {
-      "__id__": 97
+      "__id__": 98
     },
     "component": "litTheLight",
     "handler": "click",
@@ -4607,7 +4622,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 128
+      "__id__": 129
     },
     "_enabled": true,
     "positionX": 2,
@@ -4618,20 +4633,20 @@
     "_name": "21",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 97
+      "__id__": 98
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 134
-      },
-      {
         "__id__": 135
       },
       {
-        "__id__": 137
+        "__id__": 136
+      },
+      {
+        "__id__": 138
       }
     ],
     "_prefab": null,
@@ -4676,7 +4691,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 133
+      "__id__": 134
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -4702,7 +4717,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 133
+      "__id__": 134
     },
     "_enabled": true,
     "transition": 3,
@@ -4724,7 +4739,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 136
+        "__id__": 137
       }
     ],
     "_N$interactable": true,
@@ -4762,13 +4777,13 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 133
+      "__id__": 134
     }
   },
   {
     "__type__": "cc.ClickEvent",
     "target": {
-      "__id__": 97
+      "__id__": 98
     },
     "component": "litTheLight",
     "handler": "click",
@@ -4779,7 +4794,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 133
+      "__id__": 134
     },
     "_enabled": true,
     "positionX": 2,
@@ -4790,20 +4805,20 @@
     "_name": "22",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 97
+      "__id__": 98
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 139
-      },
-      {
         "__id__": 140
       },
       {
-        "__id__": 142
+        "__id__": 141
+      },
+      {
+        "__id__": 143
       }
     ],
     "_prefab": null,
@@ -4848,7 +4863,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 138
+      "__id__": 139
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -4874,7 +4889,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 138
+      "__id__": 139
     },
     "_enabled": true,
     "transition": 3,
@@ -4896,7 +4911,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 141
+        "__id__": 142
       }
     ],
     "_N$interactable": true,
@@ -4934,13 +4949,13 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 138
+      "__id__": 139
     }
   },
   {
     "__type__": "cc.ClickEvent",
     "target": {
-      "__id__": 97
+      "__id__": 98
     },
     "component": "litTheLight",
     "handler": "click",
@@ -4951,7 +4966,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 138
+      "__id__": 139
     },
     "_enabled": true,
     "positionX": 2,
@@ -4962,7 +4977,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 97
+      "__id__": 98
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -4988,33 +5003,37 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 97
+      "__id__": 98
     },
     "_enabled": true,
     "lights": [
-      {
-        "__id__": 145
-      },
       {
         "__id__": 146
       },
       {
         "__id__": 147
+      },
+      {
+        "__id__": 148
       }
-    ]
+    ],
+    "whiteNum": 0,
+    "bg": {
+      "__id__": 91
+    }
   },
   {
     "__type__": "aLight",
     "row": 1,
     "light": [
       {
-        "__id__": 98
+        "__id__": 99
       },
       {
-        "__id__": 103
+        "__id__": 104
       },
       {
-        "__id__": 108
+        "__id__": 109
       }
     ]
   },
@@ -5023,13 +5042,13 @@
     "row": 2,
     "light": [
       {
-        "__id__": 113
+        "__id__": 114
       },
       {
-        "__id__": 118
+        "__id__": 119
       },
       {
-        "__id__": 123
+        "__id__": 124
       }
     ]
   },
@@ -5038,13 +5057,13 @@
     "row": 3,
     "light": [
       {
-        "__id__": 128
+        "__id__": 129
       },
       {
-        "__id__": 133
+        "__id__": 134
       },
       {
-        "__id__": 138
+        "__id__": 139
       }
     ]
   }
