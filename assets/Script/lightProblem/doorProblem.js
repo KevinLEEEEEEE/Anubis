@@ -1,9 +1,10 @@
+
 cc.Class({
   extends: cc.Component,
 
   properties: {
     bg: cc.Node,
-
+    litTheLight: cc.Node,
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -34,11 +35,7 @@ cc.Class({
       }
     }, 0.5);
   },
-  // onMouseMove() {
-  //  this.node.on('mousemove', () => {
-  //
-  //  }, this);
-  // },
+
   mousedown() {
     if (this.isContact && this.isDistance) {
       console.log('弹出问题');
@@ -47,9 +44,8 @@ cc.Class({
     }
   },
   openWindow() {
-    const action = cc.moveTo(0.1, 440, 320);
-    const litTheLight = cc.find('litTheLight');
-    litTheLight.runAction(action);
+    const action = cc.moveTo(0.1, 25, 10);
+    this.litTheLight.runAction(action);
     this.bg.setOpacity(210);
     // cc.director.pause();
   },
