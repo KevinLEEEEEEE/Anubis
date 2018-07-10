@@ -23,14 +23,18 @@ cc.Class({
     },
     whiteNum: 0,
     bg: cc.Node,
+    door: cc.Node,
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
     this.color = cc.Color.WHITE;
-    this.door = cc.find('door');
     this.action = cc.moveTo(0.1, 1500, 1500);
+  },
+
+  init(info) {
+    this.info = info;
   },
 
   start() {
@@ -75,6 +79,7 @@ cc.Class({
         }
       }
       this.openTheDoor();
+      this.node.parent.getComponent('notchManager').addToLocalCache(this.info);
     }
   },
   openTheDoor() {
@@ -83,10 +88,15 @@ cc.Class({
       this.bg.setOpacity(0);
       // 播放帧动画
       this.scheduleOnce(() => {
-        this.door.active = false;
+        this.unlock();
       }, 2);
     }, 2);
   },
+
+  unlock() {
+    this.door.active = false;
+  },
+
   getNum() {
     return this.whiteNum;
   },
