@@ -7,7 +7,6 @@ const Notch = cc.Class({
   properties: {
     match: -1,
     node: cc.Node,
-    scriptName: 'none',
   },
 });
 
@@ -44,12 +43,12 @@ cc.Class({
     logger.DEBUG('notchList from cache:', this.notchList);
 
     this.notchNodeList.forEach((nNode) => {
-      const { match, node, scriptName } = nNode; // set the default
+      const { match, node } = nNode; // set the default
 
       if (this.isUnlocked({ match })) {
-        node.getComponent(scriptName).unlock();
+        node.getComponent('notchObject').unlock();
       } else {
-        node.getComponent(scriptName).init({ match });
+        node.getComponent('notchObject').init({ match });
       }
     });
   },

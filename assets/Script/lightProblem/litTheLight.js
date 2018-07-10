@@ -31,18 +31,10 @@ cc.Class({
   onLoad() {
     this.color = cc.Color.WHITE;
     this.action = cc.moveTo(0.1, 1500, 1500);
+
+    this.node.on('unlock', this.unlock, this); // listen to unlock event from parent
   },
 
-  init(info) {
-    this.info = info;
-  },
-
-  start() {
-  },
-
-  update() {
-
-  },
   clickReturn() {
     this.node.runAction(this.action);
     this.bg.setOpacity(0);
@@ -68,6 +60,7 @@ cc.Class({
       }
     }
   },
+
   checkNum() {
     if (this.getNum() === 9) {
       cc.log('你打开了门！');
@@ -79,9 +72,11 @@ cc.Class({
         }
       }
       this.openTheDoor();
-      this.node.parent.getComponent('notchManager').addToLocalCache(this.info);
+
+      this.node.emit('unlockRegister'); // the door will always be unlocked
     }
   },
+
   openTheDoor() {
     this.scheduleOnce(() => {
       this.node.runAction(this.action);
@@ -100,9 +95,11 @@ cc.Class({
   getNum() {
     return this.whiteNum;
   },
+
   setNumPlus() {
     this.whiteNum += 1;
   },
+
   setNumReduce() {
     this.whiteNum -= 1;
   },

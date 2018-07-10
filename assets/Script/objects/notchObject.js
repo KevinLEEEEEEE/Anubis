@@ -3,34 +3,30 @@ import logger from '../utils/logger';
 cc.Class({
   extends: cc.Component,
 
+  onLoad() {
+    if (this.unlock) {
+      this.node.emit('unlock');
+    }
+  },
+
   init(info) {
     this.info = info;
+
+    this.node.on('unlockRegister', this.unlockRegister, this);
   },
 
-  onBeginContact(contact, selfCollider, otherCollider) {
-    const { node } = otherCollider.body;
+  onDisable() {
+    this.node.off('unlockRegister', this.unlockRegister, this);
+  },
 
-    contact.disabled = true;
-
-    if (node.group !== 'player') {
-      return;
-    }
-
-    logger.INFO(`player contact notch: ${this.info}`);
+  onBeginContact() {
+    logger.INFO('player contact notch');
 
     this.notchDetect();
-
-    // play animation
   },
 
-  onEndContact(contact, selfCollider, otherCollider) {
-    const { node } = otherCollider.body;
-
-    if (node.group !== 'player') {
-      return;
-    }
-
-    logger.INFO(`player discontact notch: ${this.info}`);
+  onEndContact() {
+    logger.INFO('player discontact notch');
 
     this.notchUnDetect();
   },
@@ -50,6 +46,12 @@ cc.Class({
   },
 
   unlock() {
-    logger.INFO('notch unlock');
+    this.unlock = true;
+  },
+
+  unlockRegister() {
+    logger.INFO('player unlock notch directly');
+
+    this.node.parent.getComponent('notchManager').addToLocalCache(this.info);
   },
 });

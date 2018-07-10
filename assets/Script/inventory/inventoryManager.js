@@ -223,8 +223,6 @@ cc.Class({
 
       logger.INFO('check the key and notch');
 
-      cc.log(info, this.checkInfo.info);
-
       if (isEqual(info, this.checkInfo.info)) {
         this.checkInfo.resolve(); // unlock successfully
 
