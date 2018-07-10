@@ -22,13 +22,17 @@ cc.Class({
   onBeginContact() {
     logger.INFO('player contact notch');
 
-    this.notchDetect();
+    if (Reflect.has(this, 'info')) {
+      this.notchDetect();
+    }
   },
 
   onEndContact() {
     logger.INFO('player discontact notch');
 
-    this.notchUnDetect();
+    if (Reflect.has(this, 'info')) {
+      this.notchUnDetect();
+    }
   },
 
   notchDetect() {
@@ -46,6 +50,8 @@ cc.Class({
   },
 
   unlock() {
+    logger.INFO('unlock notch from cache');
+
     this.unlock = true;
   },
 
