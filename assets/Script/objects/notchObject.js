@@ -1,18 +1,11 @@
-import objectList from '../config/objectList';
 import logger from '../utils/logger';
 
 cc.Class({
   extends: cc.Component,
 
-  properties: {
-    require: {
-      default: objectList.default,
-      type: objectList,
-    },
-    match: 0,
+  init(info) {
+    this.info = info;
   },
-
-  // LIFE-CYCLE CALLBACKS:
 
   onBeginContact(contact, selfCollider, otherCollider) {
     const { node } = otherCollider.body;
@@ -23,7 +16,7 @@ cc.Class({
       return;
     }
 
-    logger.INFO(`player contact notch: ${this.match}`);
+    logger.INFO(`player contact notch: ${this.info}`);
 
     this.notchDetect();
 
@@ -37,7 +30,7 @@ cc.Class({
       return;
     }
 
-    logger.INFO(`player discontact notch: ${this.match}`);
+    logger.INFO(`player discontact notch: ${this.info}`);
 
     this.notchUnDetect();
   },
@@ -45,10 +38,7 @@ cc.Class({
   notchDetect() {
     const event = new cc.Event.EventCustom('notchDetect', true);
 
-    event.setUserData({
-      require: this.require,
-      match: this.match,
-    });
+    event.setUserData(this.info);
 
     this.node.dispatchEvent(event);
   },
@@ -60,14 +50,6 @@ cc.Class({
   },
 
   unlock() {
-    logger.INFO(`notch unlock: ${this.match}`);
-  },
-
-  report() {
-    logger.INFO(`notch report from: ${this.match}`);
-    return {
-      require: this.require,
-      match: this.match,
-    };
+    logger.INFO('notch unlock');
   },
 });

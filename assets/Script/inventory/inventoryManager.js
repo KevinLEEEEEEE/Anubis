@@ -1,5 +1,4 @@
-import storageManager from '../localStorage/storageManager';
-import objectList from '../config/objectList';
+import Game from '../Game';
 import isEqual from '../utils/isEqual';
 import logger from '../utils/logger';
 
@@ -17,22 +16,21 @@ cc.Class({
     key: cc.Prefab,
     container: cc.Node,
     duration: 0,
+    showY: 0,
+    hideY: 0,
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
+    logger.INFO('****** InventoryManager init start ******');
+
     // read from chche
-    const visibleSize = cc.view.getVisibleSize(); // Returns the visible area size of the view port.
-
-    this.showY = -visibleSize.height / 2;
-
-    this.hideY = this.showY - this.node.height;
-
     this.x = this.node.position.x;
 
     this.node.on(cc.Node.EventType.MOUSE_ENTER, this.mouseEnter, this);
     this.node.on(cc.Node.EventType.MOUSE_LEAVE, this.mouseLeave, this);
+    this.node.on('runCheck', this.runCheck, this);
 
     this.onSchedule = null;
 
@@ -52,18 +50,18 @@ cc.Class({
       },
     });
 
-    this.init();
+    this.initCache();
+
+    logger.INFO('****** InventoryManager init end ******');
   },
 
-  init() {
+  initCache() {
     this.inventoryList = this.pullFromCache();
 
-    logger.INFO('****** init inventoryManager ******');
     logger.DEBUG('inventoryList from cache:', this.inventoryList);
 
     this.inventoryList.forEach((object) => {
-      const { type, level, match } = object;
-      this.addNode(type, level, match);
+      this.addIcon(object);
     });
   },
 
@@ -161,48 +159,32 @@ cc.Class({
 
   // --------------------------------------------------------------------------------------------
 
-  add(item) {
-    const { type = 'default', level = '0', match = 'none' } = item; // lack of default option
+  add(info) {
+    this.addIcon(info);
 
-    this.addNode(type, level, match);
+    this.addToLocalCache(info);
 
-    this.state = state.delyOn;
-    // update cache
-    // update and show inventory
+    this.state = state.delyOn; // the change of state cause the inventory to change automatically
   },
 
-  addNode(type, level, match) {
-    let item = null;
-    switch (type) {
-    case objectList.decoration:
-      break;
-    case objectList.key:
-      item = cc.instantiate(this.key);
-      break;
-    default:
-    }
+  addIcon(info) {
+    const item = cc.instantiate(this.key);
 
-    item.getComponent('inventoryObjects').init(type, level, match);
+    item.getComponent('inventoryObjects').init(info);
 
     item.parent = this.container;
-
-    this.addToLocalCache({
-      type,
-      level,
-      match,
-    });
   },
 
-  removeNode(info, node) {
-    // remove the node fron inventory
-    // cc.log(info.node);
-
-    const index = this.inventoryList.findIndex(collection => isEqual(info, collection));
-
-    this.inventoryList.splice(index, 1);
+  remove(info, node) {
+    // remove the node icon from the inventory interface
+    this.removeIcon(node);
 
     this.deleteFromLocalCache(info);
 
+    this.pushToCache(); // CAUTION! unnecessary in the future
+  },
+
+  removeIcon(node) {
     const nodeMethods = node.getComponent('inventoryObjects');
 
     nodeMethods.remove();
@@ -214,72 +196,65 @@ cc.Class({
     this.inventoryList.push(item);
   },
 
-  deleteFromLocalCache(item) {
-    return Reflect.deleteProperty(this.inventoryList, item);
+  deleteFromLocalCache(info) {
+    const index = this.inventoryList.findIndex(collection => isEqual(info, collection));
+
+    this.inventoryList.splice(index, 1);
   },
 
   pullFromCache() {
-    return storageManager.readInventoryCache();
+    // return storageManager.readInventoryCache();
+    return Game.getInventoryCache();
   },
 
   pushToCache() {
-    storageManager.writeInventoryCache(this.inventoryList);
+    // storageManager.writeInventoryCache(this.inventoryList);
+    Game.setInventoryCache(this.inventoryList);
   },
 
   // --------------------------------------------------------------------------------------------
 
-  mousedown(info) {
+  runCheck(e) {
+    e.stopPropagation();
+
     if (this.checkInfo !== null) {
-      if (this.checkInfo.active === false) {
-        this.checkInfo.reject();
-        return;
-      }
+      const node = e.target;
+      const info = e.getUserData();
 
-      const { type, level, match } = info;
+      logger.INFO('check the key and notch');
 
-      if (type === this.checkInfo.require &&
-        level === this.checkInfo.level &&
-        match === this.checkInfo.match) {
-        this.checkInfo.resolve();
+      cc.log(info, this.checkInfo.info);
 
-        this.removeNode({
-          type,
-          level,
-          match,
-        }, info.node);
-        // object disappear
-        // write into cache
+      if (isEqual(info, this.checkInfo.info)) {
+        this.checkInfo.resolve(); // unlock successfully
+
+        this.remove(info, node);
       } else {
-        this.checkInfo.reject();
-        // nothing happens
+        this.checkInfo.reject(); // nothing to happen
       }
-      this.checkInfo = null;
     }
   },
 
   uncheck() {
-    if (this.checkInfo !== null) {
-      logger.INFO('player leave unlock range');
+    logger.INFO('player leave unlock range');
 
+    if (this.checkInfo !== null) {
       this.state = state.off;
-      this.checkInfo.active = false;
+      this.checkInfo = null;
     }
   },
 
   check(message) {
     this.state = state.foreverOn;
 
-    logger.INFO('player within unlock range');
-
     return new Promise((resolve, reject) => {
       this.checkInfo = {
-        active: true,
         resolve,
         reject,
-        require: message.require,
-        level: message.level,
-        match: message.match,
+        info: message,
       };
+
+      logger.INFO('player within unlock range');
     });
   },
 });

@@ -1,21 +1,10 @@
-import objectList from '../config/objectList';
 import logger from '../utils/logger';
 
 cc.Class({
   extends: cc.Component,
 
-  properties: {
-    type: {
-      default: objectList.key,
-      type: objectList,
-    },
-    match: 0,
-    recovery: {
-      default: 0,
-      visible() {
-        return this.type === objectList.blood;
-      },
-    },
+  init(info) {
+    this.info = info;
   },
 
   onBeginContact(contact, selfCollider, otherCollider) {
@@ -28,33 +17,24 @@ cc.Class({
     }
 
     // play animation
-    logger.INFO(`player obtain collection: ${this.match}`);
+    logger.INFO(`player obtain collection: ${this.info.match}`);
 
     this.collectionDetect();
+
     this.remove();
   },
 
   collectionDetect() {
     const event = new cc.Event.EventCustom('collectionDetect', true);
 
-    event.setUserData({
-      type: this.type,
-      match: this.match,
-      recovery: this.recovery,
-    });
+    event.setUserData(this.info);
 
     this.node.dispatchEvent(event);
   },
 
-  report() {
-    return {
-      type: this.type,
-      match: this.match,
-    };
-  },
-
   remove() {
     this.node.active = false;
-    logger.INFO(`collection remove from parent: ${this.match}`);
+
+    logger.INFO('collection remove from parent');
   },
 });

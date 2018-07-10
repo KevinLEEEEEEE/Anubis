@@ -1,4 +1,4 @@
-import storageManager from '../localStorage/storageManager';
+import Game from '../Game';
 import logger from '../utils/logger';
 
 cc.Class({
@@ -80,11 +80,10 @@ cc.Class({
   },
 
   pullFromCache() {
-    return storageManager.readLevelCollectionCache(this.level);
+    return Game.getInfoCache();
   },
 
   pushToCache() {
-    storageManager.writeLevelCollectionCache(this.level, this.collectionList);
   },
 
   // update (dt) {},
