@@ -9,14 +9,10 @@ cc.Class({
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
-    // 获得角色当前的x坐标
-    const hero = cc.find('hero');
-    this.heroPosition = hero.getPositionX();
-    //
+    this.hero = cc.find('hero');
     this.node.on(cc.Node.EventType.MOUSE_DOWN, this.mousedown, this);
     this.isContract = false;
     this.isDistance = false;
-    this.distance = this.node.getPositionX() - this.heroPosition;
   },
 
   start() {
@@ -28,16 +24,15 @@ cc.Class({
   onBeginContact(contract, selfCollider, otherCollider) {
     const otherBody = otherCollider.body;
     if (otherBody.node._name === 'hero') {
-      console.log('anubis is coming');
-      this.isContract = true;
+      this.isContact = true;
     }
-  },
-  onPreSolve(contact, selfCollider, otherCollider) {
-    const otherBody = otherCollider.body;
-    if (otherBody.node._name === 'hero') {
-      this.distance = Math.abs(this.distance);
-      this.isDistance = true;
-    }
+    this.schedule(() => {
+      this.heroPosition = this.hero.getPositionX();
+      this.distance = Math.abs(this.node.getPositionX() - this.heroPosition);
+      if (otherBody.node._name === 'hero' && this.distance <= 100) {
+        this.isDistance = true;
+      }
+    }, 0.5);
   },
   // onMouseMove() {
   //  this.node.on('mousemove', () => {
@@ -45,13 +40,11 @@ cc.Class({
   //  }, this);
   // },
   mousedown() {
-    this.node.on(cc.Node.EventType.MOUSE_DOWN, () => {
-      if (this.isContract && this.isDistance) {
-        console.log('我点到了！');
-        this.openWindow();
-        this.bg.setOpacity(210);
-      }
-    }, this);
+    if (this.isContact && this.isDistance) {
+      console.log('弹出问题');
+      this.openWindow();
+      this.bg.setOpacity(210);
+    }
   },
   openWindow() {
     const action = cc.moveTo(0.1, 440, 320);

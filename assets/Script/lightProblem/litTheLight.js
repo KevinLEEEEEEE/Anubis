@@ -1,52 +1,36 @@
 
+const sth = cc.Class(new Proxy({
+  name: 'aLight',
+  properties: {
+    row: 0,
+    light: [cc.Node],
+  },
+}, {
+  get(target, property) {
+    return target[property];
+  },
+  set(obj, prop, value) {
+    obj[prop] = value;
+  },
+}));
+
 cc.Class({
   extends: cc.Component,
-
   properties: {
+    lights: {
+      default: [],
+      type: sth,
+    },
     whiteNum: 0,
-    light00: {
-      default: null,
-      type: cc.Button,
-    },
-    light01: {
-      default: null,
-      type: cc.Button,
-    },
-    light02: {
-      default: null,
-      type: cc.Button,
-    },
-    light10: {
-      default: null,
-      type: cc.Button,
-    },
-    light11: {
-      default: null,
-      type: cc.Button,
-    },
-    light12: {
-      default: null,
-      type: cc.Button,
-    },
-    light20: {
-      default: null,
-      type: cc.Button,
-    },
-    light21: {
-      default: null,
-      type: cc.Button,
-    },
-    light22: {
-      default: null,
-      type: cc.Button,
-    },
-
-
+    bg: cc.Node,
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
+    this.color = cc.Color.WHITE;
+    this.door = cc.find('door');
+    this.action = cc.moveTo(0.1, 1500, 1500);
   },
 
   start() {
@@ -55,75 +39,62 @@ cc.Class({
   update() {
 
   },
+  clickReturn() {
+    this.node.runAction(this.action);
+    this.bg.setOpacity(0);
+  },
 
   click(e) {
-    console.log(this.whiteNum);
-    if (e.target._name === '00') {
-      this.light00.getComponent('lightToggle').lightToggle();
-      this.light01.getComponent('lightToggle').lightToggle();
-      this.light02.getComponent('lightToggle').lightToggle();
-      this.light10.getComponent('lightToggle').lightToggle();
-      this.light20.getComponent('lightToggle').lightToggle();
-    }
-    if (e.target._name === '01') {
-      this.light00.getComponent('lightToggle').lightToggle();
-      this.light01.getComponent('lightToggle').lightToggle();
-      this.light02.getComponent('lightToggle').lightToggle();
-      this.light11.getComponent('lightToggle').lightToggle();
-      this.light21.getComponent('lightToggle').lightToggle();
-    }
-    if (e.target._name === '02') {
-      this.light00.getComponent('lightToggle').lightToggle();
-      this.light01.getComponent('lightToggle').lightToggle();
-      this.light02.getComponent('lightToggle').lightToggle();
-      this.light12.getComponent('lightToggle').lightToggle();
-      this.light22.getComponent('lightToggle').lightToggle();
-    }
-    if (e.target._name === '10') {
-      this.light10.getComponent('lightToggle').lightToggle();
-      this.light11.getComponent('lightToggle').lightToggle();
-      this.light12.getComponent('lightToggle').lightToggle();
-      this.light00.getComponent('lightToggle').lightToggle();
-      this.light20.getComponent('lightToggle').lightToggle();
-    }
-    if (e.target._name === '11') {
-      this.light11.getComponent('lightToggle').lightToggle();
-      this.light01.getComponent('lightToggle').lightToggle();
-      this.light21.getComponent('lightToggle').lightToggle();
-      this.light10.getComponent('lightToggle').lightToggle();
-      this.light12.getComponent('lightToggle').lightToggle();
-    }
-    if (e.target._name === '12') {
-      this.light12.getComponent('lightToggle').lightToggle();
-      this.light10.getComponent('lightToggle').lightToggle();
-      this.light11.getComponent('lightToggle').lightToggle();
-      this.light02.getComponent('lightToggle').lightToggle();
-      this.light22.getComponent('lightToggle').lightToggle();
-    }
-    if (e.target._name === '20') {
-      this.light00.getComponent('lightToggle').lightToggle();
-      this.light21.getComponent('lightToggle').lightToggle();
-      this.light22.getComponent('lightToggle').lightToggle();
-      this.light10.getComponent('lightToggle').lightToggle();
-      this.light20.getComponent('lightToggle').lightToggle();
-    }
-    if (e.target._name === '21') {
-      this.light20.getComponent('lightToggle').lightToggle();
-      this.light21.getComponent('lightToggle').lightToggle();
-      this.light01.getComponent('lightToggle').lightToggle();
-      this.light11.getComponent('lightToggle').lightToggle();
-      this.light22.getComponent('lightToggle').lightToggle();
-    }
-    if (e.target._name === '22') {
-      this.light22.getComponent('lightToggle').lightToggle();
-      this.light02.getComponent('lightToggle').lightToggle();
-      this.light12.getComponent('lightToggle').lightToggle();
-      this.light20.getComponent('lightToggle').lightToggle();
-      this.light21.getComponent('lightToggle').lightToggle();
+    const lightToggle = e.target.getComponent('lightToggle');
+    const row = lightToggle.getPX();
+    const col = lightToggle.getPY();
+    for (let i = 0; i < 3; i += 1) {
+      for (let j = 0; j < 3; j += 1) {
+        if (i === row || j === col) {
+          const cell = this.lights[i].light[j];
+          if (cell._color.equals(this.color)) {
+            cell.getComponent('lightToggle').lightOff();
+            this.setNumReduce();
+          } else {
+            cell.getComponent('lightToggle').lightUp();
+            this.setNumPlus();
+            this.checkNum();
+          }
+        }
+      }
     }
   },
-  getWhiteNum() {
+  checkNum() {
+    if (this.getNum() === 9) {
+      cc.log('你打开了门！');
+      // 禁用所有按钮
+      for (let i = 0; i < 3; i += 1) {
+        for (let j = 0; j < 3; j += 1) {
+          const cell = this.lights[i].light[j];
+          cell.getComponent(cc.Button).interactable = false;
+        }
+      }
+      this.openTheDoor();
+    }
+  },
+  openTheDoor() {
+    this.scheduleOnce(() => {
+      this.node.runAction(this.action);
+      this.bg.setOpacity(0);
+      // 播放帧动画
+      this.scheduleOnce(() => {
+        this.door.active = false;
+      }, 2);
+    }, 2);
+  },
+  getNum() {
     return this.whiteNum;
+  },
+  setNumPlus() {
+    this.whiteNum += 1;
+  },
+  setNumReduce() {
+    this.whiteNum -= 1;
   },
 
 
