@@ -1,8 +1,8 @@
-const storageType = cc.Enum({
+const st = cc.Enum({
   INVENTORY: 'inventory',
   COLLECTION: 'collection',
   NOTCH: 'notch',
   INFO: 'info',
 });
 
-export default storageType;
+export default st;

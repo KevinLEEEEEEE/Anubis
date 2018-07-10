@@ -1,12 +1,14 @@
 export default function isEqual(a, b) {
+  const aProps = Object.keys(a);
+  const bProps = Object.keys(b);
   let result = true;
 
-  if (Object.keys(a).length !== Object.keys(b).length) {
-    result = false;
+  if (aProps.length !== bProps.length) {
+    return false;
   }
 
-  Object.keys(a).forEach((key) => {
-    if (!(Reflect.has(b, key) && a[key] === b[key])) {
+  aProps.forEach((aProp) => {
+    if (a[aProp] !== b[aProp]) {
       result = false;
     }
   });

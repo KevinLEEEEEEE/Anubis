@@ -16,7 +16,7 @@ cc.Class({
       return;
     }
 
-    logger.INFO(`player contact notch: ${this.match}`);
+    logger.INFO(`player contact notch: ${this.info}`);
 
     this.notchDetect();
 
@@ -30,7 +30,7 @@ cc.Class({
       return;
     }
 
-    logger.INFO(`player discontact notch: ${this.match}`);
+    logger.INFO(`player discontact notch: ${this.info}`);
 
     this.notchUnDetect();
   },
@@ -50,6 +50,6 @@ cc.Class({
   },
 
   unlock() {
-    logger.INFO(`notch unlock: ${this.info.match}`);
+    logger.INFO('notch unlock');
   },
 });

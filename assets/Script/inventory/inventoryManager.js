@@ -23,7 +23,7 @@ cc.Class({
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
-    logger.INFO('****** inventoryManager init start ******');
+    logger.INFO('****** InventoryManager init start ******');
 
     // read from chche
     this.x = this.node.position.x;
@@ -52,7 +52,7 @@ cc.Class({
 
     this.initCache();
 
-    logger.INFO('****** inventoryManager init end ******');
+    logger.INFO('****** InventoryManager init end ******');
   },
 
   initCache() {
@@ -221,6 +221,10 @@ cc.Class({
       const node = e.target;
       const info = e.getUserData();
 
+      logger.INFO('check the key and notch');
+
+      cc.log(info, this.checkInfo.info);
+
       if (isEqual(info, this.checkInfo.info)) {
         this.checkInfo.resolve(); // unlock successfully
 
@@ -232,9 +236,9 @@ cc.Class({
   },
 
   uncheck() {
-    if (this.checkInfo !== null) {
-      logger.INFO(`player leave unlock range, notch number: ${this.checkInfo.info.match}`);
+    logger.INFO('player leave unlock range');
 
+    if (this.checkInfo !== null) {
       this.state = state.off;
       this.checkInfo = null;
     }
@@ -250,7 +254,7 @@ cc.Class({
         info: message,
       };
 
-      logger.INFO(`player within unlock range, notch number: ${this.checkInfo.info.match}`);
+      logger.INFO('player within unlock range');
     });
   },
 });

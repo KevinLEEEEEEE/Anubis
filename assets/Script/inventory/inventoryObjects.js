@@ -16,12 +16,10 @@ cc.Class({
 
     this.node.opacity = 150;
 
-    logger.DEBUG(`init inventoryObject - level: ${info.level} match: ${info.match}`);
+    logger.DEBUG(`init inventoryObject - level: ${info.level}  match: ${info.match}`);
   },
 
   mousedown() {
-    logger.INFO('inventoryObject detect mousedown');
-
     const event = new cc.Event.EventCustom('runCheck', true);
 
     event.setUserData(this.info);

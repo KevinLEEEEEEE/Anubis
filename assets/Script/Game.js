@@ -1,5 +1,5 @@
 import localStorage from './localStorage/localStorage';
-import st from './config/storageList';
+import st from './config/storageType';
 import logger from './utils/logger';
 
 const _Game = cc.Class({

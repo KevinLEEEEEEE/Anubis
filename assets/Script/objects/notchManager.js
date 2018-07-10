@@ -24,6 +24,8 @@ cc.Class({
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
+    logger.INFO('****** NotchManager init start ******');
+
     this.node.on('notchDetect', this.notchDetect, this);
     this.node.on('notchUnDetect', this.notchUnDetect, this);
 
@@ -31,19 +33,20 @@ cc.Class({
     this.inventoryMethods = inventory.getComponent('inventoryManager');
 
     this.initCache();
+
+    logger.INFO('****** NotchManager init end ******');
   },
 
   initCache() {
     this.notchList = this.pullFromCache();
 
-    logger.INFO('****** init notchManager ******');
     logger.DEBUG('notchList from cache:', this.notchList);
 
     this.notchNodeList.forEach((nNode) => {
       const { match, node } = nNode; // set the default
 
       if (this.isUnlocked({ match })) {
-        node.getComponent('notchObject').remove();
+        node.getComponent('notchObject').unlock();
       } else {
         node.getComponent('notchObject').init({ match });
       }
@@ -68,8 +71,6 @@ cc.Class({
     const info = e.getUserData();
 
     e.stopPropagation();
-
-    logger.INFO(`notchManager reveive contact event from: ${info.match}`);
 
     this.inventoryMethods.check({
       match: info.match,

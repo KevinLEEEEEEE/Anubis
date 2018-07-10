@@ -25,7 +25,7 @@ cc.Class({
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
-    logger.INFO('****** collectionManager init start ******');
+    logger.INFO('****** CollectionManager init start ******');
 
     this.node.on('collectionDetect', this.collectionDetect, this);
 
@@ -33,13 +33,12 @@ cc.Class({
 
     this.initCache();
 
-    logger.INFO('****** collectionManager init end ******');
+    logger.INFO('****** CollectionManager init end ******');
   },
 
   initCache() {
     this.collectionList = this.pullFromCache();
 
-    logger.INFO('****** init collectionManager  ******');
     logger.DEBUG('collectionList from cache:', this.collectionList);
 
     this.collectionNodeList.forEach((cNode) => {
@@ -61,6 +60,7 @@ cc.Class({
         result = true;
       }
     });
+
     return result;
   },
 
