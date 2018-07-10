@@ -1,3 +1,4 @@
+
 const sth = cc.Class(new Proxy({
   name: 'aLight',
   properties: {
@@ -29,6 +30,7 @@ cc.Class({
   onLoad() {
     this.color = cc.Color.WHITE;
     this.door = cc.find('door');
+    this.action = cc.moveTo(0.1, 1500, 1500);
   },
 
   start() {
@@ -36,6 +38,10 @@ cc.Class({
 
   update() {
 
+  },
+  clickReturn() {
+    this.node.runAction(this.action);
+    this.bg.setOpacity(0);
   },
 
   click(e) {
@@ -61,13 +67,19 @@ cc.Class({
   checkNum() {
     if (this.getNum() === 9) {
       cc.log('你打开了门！');
+      // 禁用所有按钮
+      for (let i = 0; i < 3; i += 1) {
+        for (let j = 0; j < 3; j += 1) {
+          const cell = this.lights[i].light[j];
+          cell.getComponent(cc.Button).interactable = false;
+        }
+      }
       this.openTheDoor();
     }
   },
   openTheDoor() {
     this.scheduleOnce(() => {
-      const action = cc.moveTo(0.1, 1500, 1500);
-      this.node.runAction(action);
+      this.node.runAction(this.action);
       this.bg.setOpacity(0);
       // 播放帧动画
       this.scheduleOnce(() => {

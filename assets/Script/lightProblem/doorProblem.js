@@ -40,7 +40,6 @@ cc.Class({
   //  }, this);
   // },
   mousedown() {
-    console.log('我点到了');
     if (this.isContact && this.isDistance) {
       console.log('弹出问题');
       this.openWindow();
