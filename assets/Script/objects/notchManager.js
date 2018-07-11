@@ -15,6 +15,7 @@ cc.Class({
 
   properties: {
     level: 0,
+    inventory: cc.Node,
     notchNodeList: {
       default: [],
       type: [Notch],
@@ -29,8 +30,7 @@ cc.Class({
     this.node.on('notchDetect', this.notchDetect, this);
     this.node.on('notchUnDetect', this.notchUnDetect, this);
 
-    const inventory = cc.find('Canvas/inventory');
-    this.inventoryMethods = inventory.getComponent('inventoryManager');
+    this.inventoryMethods = this.inventory.getComponent('inventoryManager');
 
     this.initCache();
 
