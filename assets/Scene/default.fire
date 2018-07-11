@@ -54,7 +54,7 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0,
-    "autoReleaseAssets": false
+    "autoReleaseAssets": null
   },
   {
     "__type__": "cc.Node",
@@ -1798,7 +1798,8 @@
     "node": {
       "__id__": 48
     },
-    "_enabled": true
+    "_enabled": true,
+    "notchType": 0
   },
   {
     "__type__": "c0e99D2mRlP76PtcSoBy6wV",
@@ -1809,6 +1810,7 @@
     },
     "_enabled": true,
     "level": 1,
+    "inventory": null,
     "notchNodeList": [
       {
         "__id__": 54

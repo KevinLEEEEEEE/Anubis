@@ -24,13 +24,14 @@ cc.Class({
     whiteNum: 0,
     bg: cc.Node,
     door: cc.Node,
+    cage: cc.Node,
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
     this.color = cc.Color.WHITE;
-    this.action = cc.moveTo(0.1, 505, 309);
+    this.action = cc.moveTo(0.1, 1100, 1100);
   },
 
   clickReturn() {
@@ -87,7 +88,13 @@ cc.Class({
   },
 
   unlock() {
-    this.door.active = false;
+    // console.log(this.door);
+    if (this.door._name === 'door') {
+      this.door.active = false;
+    } else if (this.door._name === 'mechanism') {
+      const action = cc.moveBy(2, 0, 1000);
+      this.cage.runAction(action);
+    }
   },
 
   getNum() {
