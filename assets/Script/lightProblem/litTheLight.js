@@ -30,9 +30,7 @@ cc.Class({
 
   onLoad() {
     this.color = cc.Color.WHITE;
-    this.action = cc.moveTo(0.1, 1500, 1500);
-
-    this.node.on('unlock', this.unlock, this); // listen to unlock event from parent
+    this.action = cc.moveTo(0.1, 505, 309);
   },
 
   clickReturn() {
@@ -73,7 +71,7 @@ cc.Class({
       }
       this.openTheDoor();
 
-      this.node.emit('unlockRegister'); // the door will always be unlocked
+      this.door.emit('unlockRegister'); // the door will always be unlocked
     }
   },
 

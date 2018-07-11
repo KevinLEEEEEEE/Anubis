@@ -14,14 +14,12 @@ cc.Class({
     this.node.on(cc.Node.EventType.MOUSE_DOWN, this.mousedown, this);
     this.isContract = false;
     this.isDistance = false;
+
+    this.lightMethods = this.litTheLight.getComponent('litTheLight');
+
+    this.node.on('unlock', this.unlock, this); // listen to unlock event from parent
   },
 
-  start() {
-
-  },
-
-  update() {
-  },
   onBeginContact(contract, selfCollider, otherCollider) {
     const otherBody = otherCollider.body;
     if (otherBody.node._name === 'hero') {
@@ -43,11 +41,16 @@ cc.Class({
       this.bg.setOpacity(210);
     }
   },
+
   openWindow() {
-    const action = cc.moveTo(0.1, 25, 10);
+    const action = cc.moveTo(0.1, 505, 309);
     this.litTheLight.runAction(action);
     this.bg.setOpacity(210);
     // cc.director.pause();
+  },
+
+  unlock() {
+    this.lightMethods.unlock();
   },
 
 });

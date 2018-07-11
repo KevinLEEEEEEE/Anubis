@@ -1,16 +1,30 @@
 import logger from '../utils/logger';
 
+const notchObjectType = cc.Enum({
+  key: 0,
+  door: 1,
+});
+
 cc.Class({
   extends: cc.Component,
 
+  properties: {
+    notchType: {
+      default: notchObjectType.key,
+      type: notchObjectType,
+    },
+  },
+
   onLoad() {
-    if (this.unlock) {
+    if (this.unlock === true) {
       this.node.emit('unlock');
     }
   },
 
   init(info) {
     this.info = info;
+
+    this.contactActive = this.notchType === notchObjectType.key;
 
     this.node.on('unlockRegister', this.unlockRegister, this);
   },
@@ -20,17 +34,17 @@ cc.Class({
   },
 
   onBeginContact() {
-    logger.INFO('player contact notch');
+    if (Reflect.has(this, 'info') && this.contactActive) {
+      logger.INFO('player contact notch');
 
-    if (Reflect.has(this, 'info')) {
       this.notchDetect();
     }
   },
 
   onEndContact() {
-    logger.INFO('player discontact notch');
+    if (Reflect.has(this, 'info') && this.contactActive) {
+      logger.INFO('player discontact notch');
 
-    if (Reflect.has(this, 'info')) {
       this.notchUnDetect();
     }
   },
