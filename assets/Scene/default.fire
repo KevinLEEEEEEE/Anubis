@@ -71,7 +71,7 @@
         "__id__": 3
       },
       {
-        "__id__": 67
+        "__id__": 66
       }
     ],
     "_prefab": null,
@@ -1413,9 +1413,6 @@
       },
       {
         "__id__": 65
-      },
-      {
-        "__id__": 66
       }
     ],
     "_prefab": null,
@@ -1798,7 +1795,8 @@
     "node": {
       "__id__": 48
     },
-    "_enabled": true
+    "_enabled": true,
+    "notchType": 0
   },
   {
     "__type__": "c0e99D2mRlP76PtcSoBy6wV",
@@ -1809,6 +1807,9 @@
     },
     "_enabled": true,
     "level": 1,
+    "inventory": {
+      "__id__": 19
+    },
     "notchNodeList": [
       {
         "__id__": 54
@@ -2077,18 +2078,6 @@
       "__id__": 41
     },
     "_enabled": true
-  },
-  {
-    "__type__": "b8ff1dVwgNCtpQi1R8cWoEr",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 41
-    },
-    "_enabled": false,
-    "bulletPrefab": {
-      "__uuid__": "f99f1fe4-b5d5-4d5c-9637-a7cca7f0ac07"
-    }
   },
   {
     "__type__": "ad1b4IUgWpJqI/g3ieQYQXw",

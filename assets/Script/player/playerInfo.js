@@ -1,4 +1,5 @@
 import Game from '../Game';
+import Global from '../Global';
 import logger from '../utils/logger';
 
 cc.Class({
@@ -86,5 +87,10 @@ cc.Class({
   pushToCache() {
   },
 
-  // update (dt) {},
+  update() {
+    const pos = this.node.getPosition();
+    const worldPos = this.node.parent.convertToWorldSpaceAR(pos);
+
+    Global.setPlayerPosition(worldPos); // update player position
+  },
 });
