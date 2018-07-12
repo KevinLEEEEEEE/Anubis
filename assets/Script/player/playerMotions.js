@@ -84,7 +84,7 @@ cc.Class({
       this.canJump = true;
     }
 
-    if (this.isJump && this.canJump) {
+    if (this.isJump && this.canJump && speed.y === 0) {
       this.isJump = false;
       this.canJump = false;
       speed.y = this.jumpSpeed;

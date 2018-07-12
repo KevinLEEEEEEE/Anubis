@@ -1,7 +1,7 @@
 import Global from '../Global';
 
 const monsterState = cc.Enum({
-  PATROL: 0,
+  FROZEN: 0,
   CHASING: 1,
 });
 
@@ -17,17 +17,16 @@ cc.Class({
 
   onLoad() {
     this.body = this.node.getComponent(cc.RigidBody);
-    this.state = monsterState.PATROL;
+    this.frozen();
   },
 
   onBeginContact(contact, selfCollider, otherCollider) {
     const otherBody = otherCollider.body;
     if (otherBody.node.group === 'player') {
-      if (this.state === monsterState.CHASING) {
-        cc.log('you dead');
+      if (this.state === monsterState.FROZEN) {
+        this.toChasing();
       } else {
-        this.state = monsterState.CHASING;
-        cc.log('chasing');
+        cc.log('catch you');
       }
     }
   },
@@ -36,10 +35,30 @@ cc.Class({
     const otherBody = otherCollider.body;
     if (otherBody.node.group === 'player') {
       if (this.state === monsterState.CHASING) {
-        this.state = monsterState.PATROL;
-        cc.log('patrol');
+        this.toFrozen();
       }
     }
+  },
+
+  frozen() {
+    // stop the movement and start detect
+    this.state = monsterState.FROZEN;
+  },
+
+  toChasing() {
+    cc.log('unfrozen animation');
+    this.node.opacity = 255;
+    this.chasing();
+  },
+
+  chasing() {
+    this.state = monsterState.CHASING;
+  },
+
+  toFrozen() {
+    cc.log('frozen animation');
+    this.node.opacity = 100;
+    this.frozen();
   },
 
   update() {

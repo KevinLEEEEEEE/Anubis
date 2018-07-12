@@ -131,7 +131,7 @@
     "_enabled": true,
     "tag": 0,
     "_density": 1,
-    "_sensor": false,
+    "_sensor": true,
     "_friction": 0.2,
     "_restitution": 0,
     "body": null,
@@ -162,12 +162,12 @@
     "body": null,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": -2,
+      "x": -3,
       "y": -1
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 600,
+      "width": 1300,
       "height": 400
     }
   },
