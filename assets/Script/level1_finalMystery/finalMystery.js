@@ -4,7 +4,7 @@ cc.Class({
 
   properties: {
     bg: cc.Node,
-    litTheLight: cc.Node,
+    ringWindow: cc.Node,
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -13,10 +13,15 @@ cc.Class({
     this.node.on(cc.Node.EventType.MOUSE_DOWN, this.mousedown, this);
     this.isContact = false;
 
-    this.lightMethods = this.litTheLight.getComponent('litTheLight');
-
+    this.ringMethods = this.ringWindow.getComponent('ringWindow');
     this.node.on('unlock', this.unlock, this); // listen to unlock event from parent
   },
+
+  start() {
+
+  },
+
+  // update (dt) {},
 
   onBeginContact(contract, selfCollider, otherCollider) {
     const otherBody = otherCollider.body;
@@ -39,16 +44,13 @@ cc.Class({
       this.bg.setOpacity(210);
     }
   },
-
   openWindow() {
     const action = cc.moveTo(0.1, 505, 309);
-    this.litTheLight.runAction(action);
+    this.ringWindow.runAction(action);
     this.bg.setOpacity(210);
-    // cc.director.pause();
   },
 
   unlock() {
-    this.lightMethods.unlock();
+    this.ringMethods.unlock();
   },
-
 });
