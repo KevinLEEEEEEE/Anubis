@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "e40996d5-3ee2-4760-ba8d-5cfe8cede621",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "FallingStone": {
+      "ver": "1.0.3",
+      "uuid": "82de2023-162f-42ba-8ad3-142f758fe349",
+      "rawTextureUuid": "e40996d5-3ee2-4760-ba8d-5cfe8cede621",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 300,
+      "height": 300,
+      "rawWidth": 300,
+      "rawHeight": 300,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
