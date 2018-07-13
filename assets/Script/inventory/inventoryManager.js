@@ -9,6 +9,11 @@ const state = cc.Enum({
   delyOnPause: 3,
 });
 
+const showDirection = cc.Enum({
+  x: 0,
+  y: 1,
+});
+
 cc.Class({
   extends: cc.Component,
 
@@ -16,8 +21,34 @@ cc.Class({
     key: cc.Prefab,
     container: cc.Node,
     duration: 0,
-    showY: 0,
-    hideY: 0,
+    showDirection: {
+      default: showDirection.x,
+      type: showDirection,
+    },
+    showY: {
+      default: 0,
+      visible() {
+        return this.showDirection === showDirection.y;
+      },
+    },
+    hideY: {
+      default: 0,
+      visible() {
+        return this.showDirection === showDirection.y;
+      },
+    },
+    showX: {
+      default: 0,
+      visible() {
+        return this.showDirection === showDirection.x;
+      },
+    },
+    hideX: {
+      default: 0,
+      visible() {
+        return this.showDirection === showDirection.x;
+      },
+    },
   },
 
   // LIFE-CYCLE CALLBACKS:
@@ -27,6 +58,7 @@ cc.Class({
 
     // read from chche
     this.x = this.node.position.x;
+    this.y = this.node.position.y;
 
     this.node.on(cc.Node.EventType.MOUSE_ENTER, this.mouseEnter, this);
     this.node.on(cc.Node.EventType.MOUSE_LEAVE, this.mouseLeave, this);
@@ -95,11 +127,19 @@ cc.Class({
   // --------------------------------------------------------------------------------------------
 
   show() {
-    this.node.position = cc.v2(this.x, this.showY);
+    if (this.showDirection === showDirection.x) {
+      this.node.position = cc.v2(this.showX, this.y);
+    } else {
+      this.node.position = cc.v2(this.x, this.showY);
+    }
   },
 
   hide() {
-    this.node.position = cc.v2(this.x, this.hideY);
+    if (this.showDirection === showDirection.x) {
+      this.node.position = cc.v2(this.hideX, this.y);
+    } else {
+      this.node.position = cc.v2(this.x, this.hideY);
+    }
   },
 
   clear() {
