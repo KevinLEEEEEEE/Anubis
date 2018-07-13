@@ -1810,9 +1810,7 @@
     },
     "_enabled": true,
     "level": 1,
-    "inventory": {
-      "__id__": 19
-    },
+    "inventory": null,
     "notchNodeList": [
       {
         "__id__": 54
