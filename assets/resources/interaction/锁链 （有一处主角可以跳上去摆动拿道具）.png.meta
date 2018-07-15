@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "f6aba085-ab80-454d-8747-d3151cf85279",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "锁链 （有一处主角可以跳上去摆动拿道具）": {
+      "ver": "1.0.3",
+      "uuid": "1adad10c-60a7-43be-a889-75abd75542d0",
+      "rawTextureUuid": "f6aba085-ab80-454d-8747-d3151cf85279",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 60,
+      "height": 453,
+      "rawWidth": 60,
+      "rawHeight": 453,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
