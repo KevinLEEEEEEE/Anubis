@@ -10,13 +10,13 @@ cc.Class({
 
   properties: {
     moveSpeed: 0,
-    tracking: false,
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
     this.body = this.node.getComponent(cc.RigidBody);
+    this.count = 0;
     this.frozen();
   },
 
@@ -24,7 +24,10 @@ cc.Class({
     const otherBody = otherCollider.body;
     if (otherBody.node.group === 'player') {
       if (this.state === monsterState.FROZEN) {
-        this.toChasing();
+        this.count += 1;
+        if (this.count === 2) {
+          this.wakeUp();
+        }
       } else {
         cc.log('catch you');
       }
@@ -35,30 +38,23 @@ cc.Class({
     const otherBody = otherCollider.body;
     if (otherBody.node.group === 'player') {
       if (this.state === monsterState.CHASING) {
-        this.toFrozen();
+        this.count -= 1;
+        if (this.count === 0) {
+          this.frozen();
+        }
       }
     }
   },
 
   frozen() {
     // stop the movement and start detect
+    this.node.runAction(cc.fadeTo(1.0, 100));
     this.state = monsterState.FROZEN;
   },
 
-  toChasing() {
-    cc.log('unfrozen animation');
-    this.node.opacity = 255;
-    this.chasing();
-  },
-
-  chasing() {
+  wakeUp() {
+    this.node.runAction(cc.fadeTo(1.0, 255));
     this.state = monsterState.CHASING;
-  },
-
-  toFrozen() {
-    cc.log('frozen animation');
-    this.node.opacity = 100;
-    this.frozen();
   },
 
   update() {
